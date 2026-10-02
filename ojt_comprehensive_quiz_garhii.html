@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>بنك أسئلة تدريب OJT الشامل - خدمة العملاء والدعم الفني</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4f46e5;
+            --primary-dark: #3730a3;
+            --primary-light: #e0e7ff;
+            --accent: #0ea5e9;
+            --success: #10b981;
+            --success-light: #d1fae5;
+            --danger: #ef4444;
+            --danger-light: #fee2e2;
+            --warning: #f59e0b;
+            --bg-main: #f8fafc;
+            --bg-card: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+            --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.03);
+            --radius: 16px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Cairo', system-ui, -apple-system, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            line-height: 1.6;
+            padding: 20px 12px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+        }
+
+        /* Full Background Watermark Overlay - تم عمله بواسطه GARHII */
+        .watermark-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 999;
+            opacity: 0.05;
+            background-repeat: repeat;
+            background-size: 320px 220px;
+            background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='320' height='220' viewBox='0 0 320 220'><text x='50%' y='50%' font-size='19' font-weight='900' font-family='sans-serif' fill='%23000' text-anchor='middle' dominant-baseline='middle' transform='rotate(-28 160 110)'>تم عمله بواسطه GARHII</text></svg>");
+        }
+
+        .container {
+            width: 100%;
+            max-width: 900px;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* Watermark Ribbon Bar */
+        .watermark-banner {
+            background: linear-gradient(90deg, #1e1b4b, #312e81, #1e1b4b);
+            color: #fbbf24;
+            text-align: center;
+            padding: 9px 16px;
+            border-radius: 12px;
+            font-weight: 800;
+            font-size: 0.95rem;
+            letter-spacing: 0.5px;
+            margin-bottom: 16px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            border: 1px solid rgba(251, 191, 36, 0.3);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .watermark-banner span {
+            color: #ffffff;
+            font-weight: 900;
+            text-decoration: underline;
+        }
+
+        /* Header Card */
+        .header-card {
+            background: linear-gradient(135deg, #3730a3, #4f46e5 60%, #6366f1);
+            color: white;
+            padding: 32px 26px;
+            border-radius: var(--radius);
+            box-shadow: 0 20px 30px -10px rgba(79, 70, 229, 0.35);
+            margin-bottom: 22px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header-card::after {
+            content: '';
+            position: absolute;
+            top: -50px;
+            left: -50px;
+            width: 180px;
+            height: 180px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+        }
+
+        .badge-header {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(8px);
+            padding: 5px 16px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.25);
+        }
+
+        .header-title {
+            font-size: 1.85rem;
+            font-weight: 900;
+            margin-bottom: 10px;
+            line-height: 1.35;
+        }
+
+        .header-subtitle {
+            font-size: 0.96rem;
+            color: #e0e7ff;
+            max-width: 720px;
+            line-height: 1.6;
+        }
+
+        /* Stats Bar */
+        .stats-bar {
+            background: var(--bg-card);
+            border-radius: var(--radius);
+            padding: 18px 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+            gap: 16px;
+            margin-bottom: 20px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: var(--primary);
+        }
+
+        .stat-value.green { color: var(--success); }
+        .stat-value.red { color: var(--danger); }
+
+        .stat-label {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            font-weight: 700;
+        }
+
+        /* Progress Tracker */
+        .progress-box {
+            background: var(--bg-card);
+            border-radius: 12px;
+            padding: 16px 20px;
+            margin-bottom: 20px;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
+        }
+
+        .progress-text {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.88rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .progress-track {
+            height: 11px;
+            background: #e2e8f0;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #6366f1, #10b981);
+            width: 0%;
+            border-radius: 20px;
+            transition: width 0.4s ease;
+        }
+
+        /* Filter Pills */
+        .filter-container {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            padding-bottom: 12px;
+            margin-bottom: 20px;
+            scrollbar-width: thin;
+        }
+
+        .filter-btn {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: 8px 16px;
+            border-radius: 30px;
+            font-size: 0.84rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.2s ease;
+        }
+
+        .filter-btn:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .filter-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+            box-shadow: 0 4px 12px rgba(79, 70, 229, 0.25);
+        }
+
+        /* Question Cards */
+        .questions-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .q-card {
+            background: var(--bg-card);
+            border-radius: var(--radius);
+            padding: 24px;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
+            transition: all 0.2s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .q-card:hover {
+            border-color: #cbd5e1;
+        }
+
+        .q-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 14px;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .q-number {
+            font-size: 0.85rem;
+            font-weight: 800;
+            color: var(--primary);
+            background: var(--primary-light);
+            padding: 4px 12px;
+            border-radius: 8px;
+        }
+
+        .q-tag {
+            font-size: 0.78rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            background: #f1f5f9;
+            padding: 4px 10px;
+            border-radius: 6px;
+        }
+
+        .q-watermark-stamp {
+            font-size: 0.72rem;
+            font-weight: 800;
+            color: #cbd5e1;
+            letter-spacing: 0.5px;
+        }
+
+        .q-title {
+            font-size: 1.12rem;
+            font-weight: 800;
+            color: var(--text-main);
+            margin-bottom: 18px;
+            line-height: 1.55;
+        }
+
+        .options-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .opt-btn {
+            background: #f8fafc;
+            border: 1.5px solid var(--border);
+            border-radius: 12px;
+            padding: 14px 18px;
+            text-align: right;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text-main);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .opt-btn:hover:not(:disabled) {
+            background: #f1f5f9;
+            border-color: #94a3b8;
+            transform: translateX(-3px);
+        }
+
+        .opt-btn:disabled {
+            cursor: default;
+        }
+
+        /* Option Feedback States */
+        .opt-btn.correct {
+            background: var(--success-light) !important;
+            border-color: var(--success) !important;
+            color: #065f46 !important;
+            font-weight: 800;
+        }
+
+        .opt-btn.wrong {
+            background: var(--danger-light) !important;
+            border-color: var(--danger) !important;
+            color: #991b1b !important;
+            font-weight: 800;
+        }
+
+        .opt-icon {
+            font-size: 1.2rem;
+            min-width: 24px;
+            text-align: left;
+        }
+
+        /* Feedback Explanation */
+        .q-feedback {
+            margin-top: 16px;
+            padding: 14px 16px;
+            border-radius: 10px;
+            font-size: 0.88rem;
+            font-weight: 600;
+            line-height: 1.55;
+            display: none;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        .q-feedback.show {
+            display: block;
+        }
+
+        .q-feedback.success-bg {
+            background: #ecfdf5;
+            color: #065f46;
+            border-right: 4px solid var(--success);
+        }
+
+        .q-feedback.danger-bg {
+            background: #fef2f2;
+            color: #991b1b;
+            border-right: 4px solid var(--danger);
+        }
+
+        /* Bottom Control & Reset */
+        .action-bar {
+            margin-top: 30px;
+            display: flex;
+            justify-content: center;
+            gap: 14px;
+            flex-wrap: wrap;
+        }
+
+        .main-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 14px 28px;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 800;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(79, 70, 229, 0.3);
+            transition: all 0.2s ease;
+        }
+
+        .main-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .secondary-btn {
+            background: white;
+            color: var(--text-main);
+            border: 1.5px solid var(--border);
+            padding: 14px 24px;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .secondary-btn:hover {
+            background: #f8fafc;
+            border-color: #94a3b8;
+        }
+
+        /* Result Modal */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(15, 23, 42, 0.65);
+            backdrop-filter: blur(5px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            z-index: 1000;
+        }
+
+        .modal.active {
+            display: flex;
+            animation: fadeIn 0.25s ease-out;
+        }
+
+        .modal-card {
+            background: white;
+            border-radius: 20px;
+            padding: 36px 28px;
+            max-width: 480px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            position: relative;
+        }
+
+        .modal-watermark {
+            font-size: 0.78rem;
+            color: #94a3b8;
+            font-weight: 800;
+            margin-bottom: 12px;
+        }
+
+        .result-badge {
+            font-size: 3.5rem;
+            margin-bottom: 10px;
+        }
+
+        .modal-title {
+            font-size: 1.6rem;
+            font-weight: 900;
+            margin-bottom: 10px;
+        }
+
+        .modal-score {
+            font-size: 2.6rem;
+            font-weight: 900;
+            color: var(--primary);
+            margin-bottom: 12px;
+        }
+
+        .modal-desc {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            margin-bottom: 24px;
+            line-height: 1.6;
+        }
+
+        /* Footer */
+        footer {
+            margin-top: 40px;
+            text-align: center;
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            font-weight: 700;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 640px) {
+            .header-title { font-size: 1.45rem; }
+            .q-card { padding: 18px; }
+            .stats-bar { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Watermark Background Overlay -->
+    <div class="watermark-bg"></div>
+
+    <div class="container">
+        <!-- Top Watermark Banner -->
+        <div class="watermark-banner">
+            🛡️ تم عمله بواسطه <span>"GARHII"</span> - بنك أسئلة OJT الشامل
+        </div>
+
+        <!-- Header -->
+        <header class="header-card">
+            <span class="badge-header">تدريب OJT العملي والفني | Alex & WE Team</span>
+            <h1 class="header-title">بنك الاختبارات التفاعلي لخدمة العملاء والدعم الفني</h1>
+            <p class="header-subtitle">شامل إجراءات الخطوط الجديدة، والتجديد المبكر (Early Renew)، وإتاحة الخط الأرضي والمعاينة (Check Availability)، بالإضافة لأنظمة العمل (Customer 360, HDM, BSS, TTS, SharePoint, Radius, MSAN).</p>
+        </header>
+
+        <!-- Stats Bar -->
+        <div class="stats-bar">
+            <div class="stat-item">
+                <div class="stat-value" id="stat-total">0</div>
+                <div class="stat-label">إجمالي الأسئلة</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value" id="stat-answered">0</div>
+                <div class="stat-label">تمت الإجابة</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value green" id="stat-correct">0</div>
+                <div class="stat-label">إجابات صحيحة</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value red" id="stat-wrong">0</div>
+                <div class="stat-label">إجابات خاطئة</div>
+            </div>
+        </div>
+
+        <!-- Progress Tracker -->
+        <div class="progress-box">
+            <div class="progress-text">
+                <span>نسبة الإنجاز في الاختبار</span>
+                <span id="progress-percent">0%</span>
+            </div>
+            <div class="progress-track">
+                <div class="progress-fill" id="progress-bar"></div>
+            </div>
+        </div>
+
+        <!-- Filter Categories -->
+        <div class="filter-container" id="category-filters">
+            <button class="filter-btn active" data-cat="all">جميع الأسئلة</button>
+        </div>
+
+        <!-- Questions List -->
+        <div class="questions-container" id="questions-list">
+            <!-- Rendered by JS -->
+        </div>
+
+        <!-- Action Bar -->
+        <div class="action-bar">
+            <button class="main-btn" onclick="showFinalResult()">إنهاء وعرض النتيجة النهائية 📊</button>
+            <button class="secondary-btn" onclick="resetQuiz()">إعادة تعيين الاختبار 🔄</button>
+        </div>
+
+        <!-- Footer -->
+        <footer>
+            جميع الحقوق محفوظة &copy; تم عمله بواسطه "GARHII" | مخصص للتدريب والتأهيل العملي
+        </footer>
+    </div>
+
+    <!-- Modal Result -->
+    <div class="modal" id="result-modal">
+        <div class="modal-card">
+            <div class="modal-watermark">تم عمله بواسطه "GARHII"</div>
+            <div class="result-badge" id="modal-icon">🏆</div>
+            <h2 class="modal-title" id="modal-headline">أحسنت صنعاً!</h2>
+            <div class="modal-score" id="modal-percentage">0%</div>
+            <p class="modal-desc" id="modal-summary">تفاصيل الأداء</p>
+            <button class="main-btn" style="width: 100%;" onclick="closeModal()">مراجعة الحلول 📝</button>
+        </div>
+    </div>
+
+    <script>
+        const quizData = [{"category": "إجراءات التعاقد والخطوط الجديدة", "question": "في حالة إني قدمت على خط أرضي للعميل من خلالي، ما هي المدة التي أبلغ بها العميل لوصول المعاينة؟", "options": ["بقوله المعاينة هتجيله في خلال الـ 24 ساعة", "في خلال 5 أيام", "خلال أسبوعين عمل", "في نفس اللحظة بدون معاينة"], "answer": 0, "explanation": "المعاينة تتم للعميل خلال 24 ساعة من تسجيل الطلب لفحص الإمكانية الفنية على البوكسة والكبائن."}, {"category": "إجراءات التعاقد والخطوط الجديدة", "question": "ما هي الأوراق الرسمية المطلوبة من العميل للتعاقد على خط أرضي جديد في السنترال؟", "options": ["البطاقة تكون سارية + عقد الإيجار/الملكية + أي إيصال مرافق حديث", "عقد الإيجار + البطاقة فقط بدون إيصال مرافق", "البطاقة الشخصية فقط", "شهادة الميلاد وصورة شخصية حديثة"], "answer": 0, "explanation": "يشترط إحضار بطاقة الرقم القومي سارية + عقد الإيجار أو الملكية + إيصال مرافق حديث (كهرباء/مياه/غاز)."}, {"category": "إجراءات التعاقد والخطوط الجديدة", "question": "عند التقديم على خط أرضي جديد للعميل، ما هي التكاليف والعروض الترويجية الواجب توضيحها بدقة؟", "options": ["مصاريف تركيب الأرضي فقط", "مصاريف الأرضي والإنترنت بدون ذكر أي عروض", "مصاريف الأرضي والإنترنت وبداية من باقة 200 جيجا ليه زيادة 50% على الباقة لمدة 3 شهور وقيمة الراوتر", "قيمة أول اشتراك شهري للإنترنت فقط"], "answer": 2, "explanation": "يجب على الموظف الشفافية الكاملة بتوضيح رسوم التأسيس، والاشتراك، وعرض الـ 50% الإضافية لمدة 3 شهور لباقات 200GB فأعلى، وسعر الراوتر."}, {"category": "إجراءات التعاقد والخطوط الجديدة", "question": "كم تبلغ قيمة جهاز الراوتر للعميل وفقاً لخيارات السداد المعتمدة؟", "options": ["1710 جنيه كاش، أو 57 جنيه شهرياً قسط لمدة 36 شهر", "1700 جنيه كاش، أو 55 جنيه قسط على 3 سنين", "1500 جنيه كاش، أو 50 جنيه قسط لمدة 24 شهر", "الراوتر يسلم مجاناً بدون أي أقساط"], "answer": 0, "explanation": "قيمة الراوتر 1710 جنيهاً في حالة الدفع الكاش، أو تقسيط 57 جنيهاً شهرياً على مدار 36 شهراً."}, {"category": "خطوات التجديد المبكر (Early Renew Steps)", "question": "أثناء مكالمة التجديد المبكر، ما هي المعلومة التوعوية الإلزامية التي يجب إبلاغ العميل بها؟", "options": ["إبلاغه بضرورة الاتصال بخدمة العملاء كل شهر للتجديد", "إبلاغه بأنه يستطيع التجديد بنفسه عبر القنوات الرقمية (Mobile App / Ecare / IVR) لو لم يسبق له استخدامها", "إبلاغه بأن سرعة الباقة ستنخفض للنصف بعد التجديد", "طلب التوجه للسنترال لتسجيل رغبته في التجديد"], "answer": 1, "explanation": "طبقاً لتعليمات OJT، ضروري إبلاغ العميل بإمكانية استخدام قنوات الخدمة الذاتية (IVR / Mobile App / Ecare) في المرات القادمة مع فحص آخر 5 طلبات له."}, {"category": "خطوات التجديد المبكر (Early Renew Steps)", "question": "إذا كان العميل يتصل من نفس رقم الخط الأرضي الخاص بالاشتراك، فما هي قاعدة التحقق (Verification)؟", "options": ["يجب عمل Full Verification بسؤاله عن الرقم القومي بالكامل", "مش هتعمل معاه Verification نهائياً لثبوت الاتصال من نفس الخط الأرضي", "طلب تاريخ ميلاد صاحب الخط", "إرسال رمز OTP لرقم الموبايل المسجل"], "answer": 1, "explanation": "إذا كان الاتصال وارداً من نفس رقم الخط الأرضي للخدمة (Calling from same fixed line)، يتم تخطي الـ Verification مباشرة."}, {"category": "خطوات التجديد المبكر (Early Renew Steps)", "question": "إذا كان العميل يتصل من نفس رقم الموبايل المسجل في الـ Subscriber على الـ BSS، ففي أي المعاملات يتم استثناؤه من الـ Verification؟", "options": ["في جميع المعاملات وتغيير ملكية الخط", "في طلب التجديد المبكر (Early Renewal) فقط", "في طلبات إلغاء الخط والتحويل لشركات أخرى", "لا يتم استثناؤه في أي طلب"], "answer": 1, "explanation": "الاتصال من الموبايل المسجل على BSS يعفي العميل من التحقق في طلب الـ Early Renewal فقط."}, {"category": "خطوات التجديد المبكر (Early Renew Steps)", "question": "إذا اتصل العميل من رقم موبايل مختلف وطلب تجديد مبكر، ما هي أول خطوة معتمدة في الـ Verification؟", "options": ["سؤاله عن الرقم التأميني ومحل السكن بالتفصيل", "سؤاله عن تاريخ آخر عملية شحن (اليوم)", "طلب صورة البطاقة عبر الواتساب", "تحويل المكالمة للفرع فوراً"], "answer": 1, "explanation": "أول خطوة في التحقق لطلب التجديد المبكر هي سؤاله عن تاريخ آخر شحن (اليوم)، وإذا لم يتذكر يتم سؤاله عن آخر 3 أرقام من الموبايل المسجل + الاسم ثنائي."}, {"category": "خطوات التجديد المبكر (Early Renew Steps)", "question": "على نظام BSS، ما هو الخيار المتبع لتنفيذ التجديد المبكر لحساب العميل؟", "options": ["الدخول على تبويب Customer ثم Delete Account", "الدخول على تبويب Subscriber ثم الضغط على زر Change Offering(Fixed)", "الضغط على زر Suspend and Bar(Fixed)", "فتح تذكرة عطل Trouble Ticket للموزع"], "answer": 1, "explanation": "يتم الدخول على صفحة العميل، واختيار زر Change Offering(Fixed) من تحت بيانات الاشتراك وتحديد الباقة وتطبيق Effective Mode: Immediately."}, {"category": "خطوات التجديد المبكر (Early Renew Steps)", "question": "ما هي الـ SR الأكثر استخداماً بنسبة تتجاوز 85% إلى 90% عند التجديد المبكر لعميل يتصل من رقم مختلف؟", "options": ["FBB Non-Tech Request -> Billing -> Early renewal Done - Last Recharge Verification", "FBB Non-Tech Inquiry -> Billing -> Early renewal", "Fixed Voice Complaint -> check availability", "Logical Cases -> Port Down TT"], "answer": 0, "explanation": "هذه الـ SR هي الأكثر شيوعاً بنسبة تتعدى 90%؛ لأن الموظف يسأل العميل عن ميعاد الشحن ويقوم بالتجديد فوراً عند التحقق."}, {"category": "خطوات التجديد المبكر (Early Renew Steps)", "question": "ما الـ SR المعتمدة إذا قام العميل بالتجديد الذاتي (Self-service) ولم ترجع السرعة إلا بعد تواصله معنا وعمل Restart Port؟", "options": ["FBB Non-Tech Complaint -> Billing -> Early renewal done by CST - after restart port", "FBB Non-Tech Inquiry -> Billing -> Early renewal Follow Up", "FBB Non-Tech Request -> Billing -> Early renewal - Not Done not Verified", "Fixed Voice SR follow up -> Check Availability"], "answer": 0, "explanation": "تُسجل كشكوى عدم استعادة السرعة تلقائياً بعد التجديد الذاتي: Early renewal done by CST - after restart port."}, {"category": "خطوات التجديد المبكر (Early Renew Steps)", "question": "إذا طلب العميل تجديد مبكر واشتكى أثناء المكالمة من تكرار انتهاء الباقة سريعاً بسبب الاستهلاك العالي، فما هو تصنيف الـ SR؟", "options": ["FBB Non-Technical Complaint -> Billing -> Early renewal Done", "FBB Non-Tech Inquiry -> Billing -> Early renewal Done", "FBB Non-Tech Request -> Billing -> Early renewal Done - Full Verification", "Outage Alert -> Core Down"], "answer": 0, "explanation": "تسجل تحت بند شكوى غير فنية (Complaint) بسبب إبداء العميل عدم الرضاء عن سرعة نفاد الباقة واستهلاكه العالي."}, {"category": "إتاحة الخط الأرضي والمعاينة (Check Availability)", "question": "ما هو المسار الصحيح على شاشة BSS للبدء في فحص وتقديم طلب إتاحة خط أرضي جديد؟", "options": ["Sitemap -> Integrated Operations (New) -> Check Availability(PSTN)", "Sitemap -> Accounts Receivable -> Voucher Recharge", "Sitemap -> Debt Collection -> Shared Group", "Customer 360 -> Wi-Fi Diagnostic Tab"], "answer": 0, "explanation": "المسار المعتمد لطلب الإتاحة هو Integrated Operations (New) ثم اختيار Check Availability(PSTN)."}, {"category": "إتاحة الخط الأرضي والمعاينة (Check Availability)", "question": "بعد كتابة الرقم القومي للعميل في شاشة طلب الإتاحة، ما الخطوة الإلزامية قبل إدخال العنوان والمكان؟", "options": ["الضغط فوراً على Check Out", "الضغط على زر Verify ثم زر Search للتحقق من هوية وحسابات العميل", "إغلاق الشاشة وإعادة فتحها", "تحويل الطلب لمشرف السنترال"], "answer": 1, "explanation": "من أساسيات OJT الضغط أولاً على Verify & Search لمطابقة الرقم القومي قبل استكمال إدخال العنوان وباقي الحقول."}, {"category": "إتاحة الخط الأرضي والمعاينة (Check Availability)", "question": "في شاشة Availability Request، متى يجب على الموظف تفعيل علامة الصح على اختيار (Voice&Data)؟", "options": ["إذا كان العميل يرغب في خط أرضي صوتي فقط", "إذا كان العميل يشترك على خط أرضي وإنترنت منزلي معاً", "في جميع الطلبات إجبارياً بدون استثناء", "فقط عند ترقية سرعة خط قديم"], "answer": 1, "explanation": "يتم وضع علامة على Voice&Data لو العميل سيشترك أرضي ونت، لكن لو هيقدم على أرضي صوتي بس لا يتم التحديد."}, {"category": "إتاحة الخط الأرضي والمعاينة (Check Availability)", "question": "إذا كان للعميل جار بنفس المبنى ولديه خط أرضي يعمل، فكيف يتم إدخاله في شاشة الإتاحة؟", "options": ["اختيار By In-Building Phone No. وكتابة كود المحافظة بدون الصفر ثم رقم الخط الأرضي", "كتابة رقم موبايل الجار الشخصي", "اختيار By Cabinet No وكتابة اسم الحي", "لا يمكن الاستعانة بخط الجار في النظام"], "answer": 0, "explanation": "نختار By In-Building Phone No. ونكتب كود المحافظة بدون الـ 0 متبوعاً برقم الهاتف الأرضي ثم Get Line Type."}, {"category": "إتاحة الخط الأرضي والمعاينة (Check Availability)", "question": "ما هو الإجراء والاسكريبت إذا كانت النتيجة الفورية للطلب على النظام (Not Available)؟", "options": ["إبلاغ العميل برفض الطلب نهائياً وإلغائه", "إبلاغ العميل بأنه سيتم عمل معاينة لطلبه والرد عليه خلال 24 ساعة للتأكد من الإمكانية الفنية", "طلب التوجه للسنترال فوراً لشراء سلك", "تحويل العميل لشكاوى الجهاز القومي للاتصالات"], "answer": 1, "explanation": "إذا ظهرت Not Available نقول للعميل: 'هيتم عمل معاينة على طلب حضرتك وهيتم الرد عليك في خلال 24 ساعة للتأكد من الإمكانية الفنية'."}, {"category": "إتاحة الخط الأرضي والمعاينة (Check Availability)", "question": "ما هو الاسكريبت والمهلة المحددة للعميل إذا أظهر النظام أن النتيجة (Available)؟", "options": ["إبلاغه بوجود إمكانية فنية وضرورة التوجه للسنترال خلال 14 يوماً مع إعطائه رقم السيريال", "إبلاغه بأن الفني سيصل للمنزل بعد ساعتين", "إبلاغه بدفع الاشتراك أونلاين فقط خلال 24 ساعة", "توجيهه للانتظار لمدة شهر"], "answer": 0, "explanation": "نبلغه بوجود إمكانية فنية وضرورة التوجه للسنترال خلال 14 يوماً لاستكمال الإجراءات، مع إعطائه رقم السيريال وتسجيل SR."}, {"category": "إتاحة الخط الأرضي والمعاينة (Check Availability)", "question": "عند متابعة طلب إتاحة ووجد الموظف أن حالة المعاينة (Survey Status) هي (Survey Started)، فما الخطوة التالية؟", "options": ["إلغاء الطلب فوراً", "الضغط على View والدخول على Order Query برقم Survey Order ID وتفعيل Including History لمعرفة العطل", "إبلاغ العميل بأن الخط تم تركيبه بالفعل", "إعادة تقديم طلب جديد من البداية"], "answer": 1, "explanation": "نضغط View ونأخذ Survey Order ID ونبحث به في Order Query مع تفعيل Including History لفحص الـ Activity Info وسبب الخطأ."}, {"category": "إتاحة الخط الأرضي والمعاينة (Check Availability)", "question": "إذا أظهرت تفاصيل الطلب في Order Query رمز الخطأ (700: Not Available - Need Box)، فكيف يتم التعامل مع العميل؟", "options": ["إبلاغه بأن طلبه غير متاح حالياً وسيتم التواصل معه بمجرد توافر الإمكانية (دون تحديد وقت محدد)", "إبلاغه أن البوكسة ستصل غداً في تمام العاشرة صباحاً", "طلب شراء بوكسة على حسابه الخاص", "إغلاق المكالمة دون توضيح"], "answer": 0, "explanation": "في حالات Need Box أو Need Planning Port نبلغ العميل أن الطلب غير متاح حالياً وسيتم إبلاغه عند توافر الإمكانية دون وعد بموعد محدد."}, {"category": "إتاحة الخط الأرضي والمعاينة (Check Availability)", "question": "إذا انتهت المعاينة بنتيجة (Finished & Not Available)، فما هي المعلومة الرسمية الواجب إبلاغ العميل بها؟", "options": ["أن الطلب ملغي ولن يتم قبوله أبداً", "أن مفيش إمكانية حالياً وأن طلبه المقدم سيظل متاحاً على قوائم الانتظار لمدة سنتين دون ذكر أسباب فنية للرفض", "توضيح التفاصيل الهندسية للكبائن والأسلاك وعدد البورتات الشاغرة", "توجيهه لمقر الوزارة"], "answer": 1, "explanation": "نبلغ العميل أن مفيش إمكانية حالياً وأن الطلب متاح لمدة سنتين، مع منع توضيح الأسباب الفنية للرفض (مثل نقص الكبائن أو البورتات)."}, {"category": "إتاحة الخط الأرضي والمعاينة (Check Availability)", "question": "إذا ظهرت حالة الطلب (Expired & Available) لتأخر العميل أكثر من 14 يوماً عن استكمال التعاقد، فما الإجراء الصحيح؟", "options": ["رفض التعامل مع العميل نهائياً", "عمل Modify للطلب واختيار (Customer Request) ثم Check Out لإعادة تفعيل السيريال لعمل معاينة جديدة", "فتح تذكرة عطل فيزيائي", "إعطاء العميل رقم خط عشوائي"], "answer": 1, "explanation": "يتم عمل تعديل Modify واختيار سبب Customer Request ثم Checkout لإعادة تنشيط السيريال وعمل معاينة جديدة."}, {"category": "إتاحة الخط الأرضي والمعاينة (Check Availability)", "question": "ما هو تصنيف الـ SR المعتمد عند قيام الموظف بتقديم طلب إتاحة جديد للعميل بنجاح أثناء المكالمة؟", "options": ["Fixed Voice Request -> Check availability -> Action Done", "Fixed voice SR follow up -> Check Availability -> Violated SLA", "Fixed Voice SR Complaint -> check availability -> Not Available", "FBB Non-Tech Inquiry -> Early renewal"], "answer": 0, "explanation": "يتم تسجيل الـ SR كطلب تم تنفيذه بالكامل: Fixed Voice Request -> Check availability -> Action Done."}, {"category": "إتاحة الخط الأرضي والمعاينة (Check Availability)", "question": "إذا كان العميل يتابع حالة طلب الإتاحة وما زال الطلب داخل مهلة الـ 24 ساعة المحددة، فما هو تصنيف الـ SR؟", "options": ["Fixed voice SR follow up -> Check Availability -> Within SLA", "Fixed voice SR follow up -> Check Availability -> Violated SLA", "Fixed Voice Request -> Check availability -> Cancel check availability", "Logical Cases -> Authentication Error"], "answer": 0, "explanation": "بما أن الطلب داخل مهلة الـ 24 ساعة، يسجل متابعة ضمن المهلة: Check Availability -> Within SLA."}, {"category": "أنظمة خدمة العملاء (Customer 360 & HDM)", "question": "عند البحث عن حساب العميل على نظام (Customer 360)، ما هي الطريقة الأسرع والأكثر دقة للوصول للحساب؟", "options": ["البحث برقم الهاتف الأرضي مسبوقاً بكود المحافظة (مثل 02XXXXXXXX)", "البحث بالاسم الأول للعميل فقط", "البحث برقم الموديل الخاص بالراوتر", "البحث باسم الشارع بدون رقم العقار"], "answer": 0, "explanation": "البحث برقم الخدمة الأرضي مسبوقاً بكود المحافظة يوصل مباشرة لملف العميل الفريد ويمنع الخلط بين الحسابات."}, {"category": "أنظمة خدمة العملاء (Customer 360 & HDM)", "question": "ما هي الوظيفة الفنية الأساسية لنظام (HDM - Home Device Manager) لموظف الدعم؟", "options": ["تحصيل الفواتير والاشتراكات النقدية", "قراءة كفاءة الخط (SNR Margin / Line Attenuation)، ومعرفة الأجهزة المتصلة، وتعديل إعدادات الـ Wi-Fi عن بُعد", "حجز مواعيد المقابلات الشخصية للمهندسين", "تسجيل المكالمات الصوتية الواردة"], "answer": 1, "explanation": "نظام HDM يدير الراوتر عن بُعد عبر بروتوكول TR-069 لقراءة قياسات الخط وتعديل اسم وكلمة سر الواي فاي."}, {"category": "أنظمة خدمة العملاء (Customer 360 & HDM)", "question": "على نظام (HDM)، إذا كانت قراءة (SNR Margin) للـ Downstream أقل من 6 dB، فهذا يدل على:", "options": ["جودة خط ممتازة واستقرار تام للإشارة", "وجود تشويش عالي جداً على الخط يؤدي إلى عدم استقرار الخدمة وتكرار التقطيع", "أن الراوتر غير متصل بمصدر الكهرباء", "أن الباقة الشهرية قد استهلكت بالكامل"], "answer": 1, "explanation": "قيمة SNR Margin تحت 6 dB تدل على خط حرج جداً (Poor Margin) ويعاني من تقطيع مستمر في التزامن (Line Drops)."}, {"category": "أنظمة خدمة العملاء (Customer 360 & HDM)", "question": "إذا كانت لمبة الـ DSL بالراوتر مطفأة تماماً أو في حالة وميض مستمر (Blinking)، فما هو التشخيص الأولي؟", "options": ["خطأ في إدخال بيانات الـ WAN والـ PPPoE", "عدم وصول إشارة فيزيائية مستقرة، ويجب مراجعة التوصيلات والسلك والاسبليتر (Physical Connection)", "انتهاء رصيد الباقة الشهرية", "تلف في متصفح الإنترنت الخاص بجهاز العميل"], "answer": 1, "explanation": "وميض أو انطفاء لمبة الـ DSL يعني غياب الإشارة الكهربائية التزامنية، مما يشير لخلل فيزيائي في الأسلاك أو الاسبليتر أو البورت."}, {"category": "أنظمة خدمة العملاء (Customer 360 & HDM)", "question": "إذا كانت لمبة الـ DSL ثابتة بينما لمبة الـ Internet تضيء باللون الأحمر، فما الخطوة الصحيحة؟", "options": ["التأكد من صحة إدخال اسم المستخدم وكلمة المرور (WAN Configuration / PPPoE Credentials) في الراوتر", "تغيير سلك التليفون الواصل من الشارع فوراً", "إبلاغ العميل بضرورة شراء جهاز راوتر جديد", "فحص حرارة التليفون الأرضي بالسماعة فقط"], "answer": 0, "explanation": "ثبات DSL مع احمرار Internet يعني نجاح الربط الفيزيائي ولكن فشل التحقق في السيرفر (Authentication Failure)."}, {"category": "إدارة تذاكر الأعطال والشبكة (TTS & Network)", "question": "ما هو التوقيت الصحيح لفتح تذكرة عطل فني (Trouble Ticket - TT) على نظام الـ TTS؟", "options": ["في بداية المكالمة لتقليل وقت معالجة المكالمة (AHT)", "بعد استنفاد كافة خطوات استكشاف الأعطال الأساسية (Troubleshooting) والتأكد من وجود عطل يتطلب تدخل المستوى الأعلى", "بمجرد طلب العميل التحدث مع المشرف", "عند تأخر العميل عن سداد الفاتورة"], "answer": 1, "explanation": "يجب استنفاد الـ Troubleshooting أولاً لتجنب التذاكر المرتجعة (Bounced Tickets) وتخفيف العبء على الصيانة الميدانية."}, {"category": "إدارة تذاكر الأعطال والشبكة (TTS & Network)", "question": "في نظام الـ TTS، إذا كان العطل ناتجاً عن كسر كابل رئيسي بالسنترال (Major Outage)، فما الإجراء الصحيح؟", "options": ["فتح تذكرة فردية عاجلة لكل متصل", "ربط خط العميل بالتذكرة الرئيسية للعطل العام (Child to Parent Ticket) وإبلاغه بالوقت المتوقع دون فتح تذكرة مستقلة", "عمل إعادة ضبط مصنع لراوتر العميل", "تحويل المكالمة لقسم المبيعات"], "answer": 1, "explanation": "في حالات العطل العام (Outage) يتم ربط المشتركين بالعطل المجمع لإبلاغهم بالـ SLA الموحد دون إغراق النظام بتذاكر فردية."}, {"category": "إدارة تذاكر الأعطال والشبكة (TTS & Network)", "question": "ماذا تعني حالة التذكرة (Pending Customer) داخل نظام الـ TTS؟", "options": ["التذكرة أغلقت بنجاح وتم حل المشكلة", "التذكرة معلقة مؤقتاً في انتظار رد أو إجراء مطلوب من العميل (مثل تجربة جهاز بديل أو الرد على اتصال الفني)", "التذكرة في انتظار السداد المالي", "سيرفر التذاكر متوقف عن العمل"], "answer": 1, "explanation": "توضع حالة Pending Customer لإيقاف عداد الـ SLA مؤقتاً حتى يتجاوب العميل مع تعليمات الفريق التقني."}, {"category": "إدارة تذاكر الأعطال والشبكة (TTS & Network)", "question": "ماذا يعني ظهور رسالة (Access-Reject / Bad Authentication) على سجلات خادم الـ Radius؟", "options": ["وجود قطع في كابل التليفون بالشارع", "بيانات الدخول للخدمة (PPPoE Username / Password) المدخلة بالراوتر غير صحيحة", "حرارة الخط الأرضي معطلة بالكامل", "الراوتر متصل بنجاح بالإنترنت"], "answer": 1, "explanation": "خادم المصادقة Radius يرفض الطلب (Access-Reject) عند عدم تطابق بيانات اسم المستخدم أو كلمة السر مع قاعدة البيانات."}, {"category": "إدارة تذاكر الأعطال والشبكة (TTS & Network)", "question": "إذا أظهر نظام الـ Radius أن حالة العميل (Active Session) بينما الراوتر مغلق تماماً ولمبة الإنترنت مطفأة، فما التشخيص؟", "options": ["اختراق الحساب من شبكة خارجية", "وجود جلسة معلقة (Stuck Session) ويجب تنفيذ أمر إنهاء الجلسة (Kill/Disconnect Session) لإتاحة الاتصال من جديد", "تلف وحدة المعالجة المركزية بالراوتر", "انتهاء باقة التحميل الشهرية"], "answer": 1, "explanation": "الجلسة المعلقة (Stuck/Hanging Session) تمنع الراوتر من الحصول على IP جديد وتتطلب عمل Kill Session من النظام."}, {"category": "إدارة تذاكر الأعطال والشبكة (TTS & Network)", "question": "ما هو الغرض من تنفيذ إجراء (Port Reset / Port Bounce) من خلال نظام إدارة الشبكة (MSAN / U2000)؟", "options": ["تغيير باقة الاشتراك الخاصة بالعميل", "إعادة تشغيل المنفذ في الكابينة لتنشيط الإشارة وإجبار الراوتر والكابينة على إعادة بناء التزامن الفيزيائي", "مسح سجل فواتير العميل", "إلغاء خاصية إظهار رقم المتصل"], "answer": 1, "explanation": "عملية Port Reset تعيد تنشيط دائرة الكارت بالكابينة وتحل مشاكل التهنيج اللحظي للبورت وعدم استقرار الإشارة."}, {"category": "الشير بوينت والفوترة (SharePoint & BSS)", "question": "ما هي الأهمية الأساسية لبوابة الشير بوينت (SharePoint / Intranet) لموظف خدمة العملاء؟", "options": ["تحميل البرامج والألعاب الترفيهية", "الرجوع للمصدر المعتمد والمحدث للأسعار، والعروض الترويجية، ومصفوفة التصعيد (Escalation Matrix)، وسيناريوهات الأعطال", "الاطلاع على الحسابات البنكية للمشتركين", "إرسال رسائل بريد شخصية للعملاء"], "answer": 1, "explanation": "الشير بوينت هو المرجع الرسمي الداخلي (Single Source of Truth) المعتمد للسياسات والأسعار وسيناريوهات العمل."}, {"category": "الشير بوينت والفوترة (SharePoint & BSS)", "question": "ما هي وظيفة 'مصفوفة التصعيد' (Escalation Matrix) المتاحة على الشير بوينت؟", "options": ["جدول لتوزيع الإجازات الأسبوعية", "وثيقة تحدد لكل نوع مشكلة: الإدارة المسؤولة عنها، وقت الاستجابة والحل المحدد (SLA)، ومسار التحويل المعتمد", "حاسبة إلكترونية لحساب قيمة الفاتورة", "دليل لأنواع أجهزة الكمبيوتر المكتبية"], "answer": 1, "explanation": "الـ Escalation Matrix تحدد مسار كل نوع مشكلة بدقة (MDF, NOC, Core, Billing) والوقت المسموح لحلها دون إخلال بالـ SLA."}, {"category": "الشير بوينت والفوترة (SharePoint & BSS)", "question": "إذا اشتكى العميل من تراجع سرعة الإنترنت فجأة إلى (256 Kbps أو 1 Mbps) مع استقرار جميع لمبات الراوتر باللون الأخضر، فما هو الإجراء الأول؟", "options": ["فحص استهلاك الباقة على السيستم والتأكد إن كان العميل في حالة نفاد السعة وتطبيق سياسة الاستخدام العادل (FUP)", "طلب فني للمنزل لتغيير السلك الأرضي فوراً", "عمل إعادة ضبط مصنع للراوتر وإعادة كتابة البيانات", "إبلاغ العميل بوجود عطل عام في السنترال"], "answer": 0, "explanation": "استقرار اللمبات ونزول السرعة للسرعة الخانقة (Throttling) يشير فوراً لاستهلاك كامل الجيجابايتس، ويتم فحص ذلك من الـ Billing/Usage."}, {"category": "الشير بوينت والفوترة (SharePoint & BSS)", "question": "ما الإجراء الصحيح عند ظهور حالة الحساب على نظام BSS كـ (Suspended - Overdue)؟", "options": ["فتح تذكرة عطل فيزيائي في نظام TTS للصيانة الميدانية", "توضيح أن الخدمة معلقة إدارياً لعدم سداد الفاتورة وإرشاد العميل لطرق ومنافذ الدفع المتاحة لتنشيط الخط تلقائياً", "تغيير باقة العميل لباقة مجانية", "عمل إعادة تشغيل للبورت في الكابينة فوراً"], "answer": 1, "explanation": "حالة Overdue Suspended تعني تعليق الحساب لتأخر السداد، وتعود الخدمة تلقائياً للعمل بمجرد سداد الفاتورة عبر منافذ الدفع."}];
+
+        let userAnswers = {}; // { qIndex: { chosen: number, isCorrect: boolean } }
+        let currentFilter = 'all';
+
+        function initApp() {
+            document.getElementById('stat-total').innerText = quizData.length;
+            renderCategories();
+            renderQuestions();
+            updateStats();
+        }
+
+        function renderCategories() {
+            const categories = ['all', ...new Set(quizData.map(q => q.category))];
+            const filterContainer = document.getElementById('category-filters');
+            filterContainer.innerHTML = '';
+
+            categories.forEach(cat => {
+                const btn = document.createElement('button');
+                btn.className = `filter-btn ${cat === currentFilter ? 'active' : ''}`;
+                btn.innerText = cat === 'all' ? `جميع الأسئلة (${quizData.length})` : cat;
+                btn.onclick = () => {
+                    currentFilter = cat;
+                    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    renderQuestions();
+                };
+                filterContainer.appendChild(btn);
+            });
+        }
+
+        function renderQuestions() {
+            const list = document.getElementById('questions-list');
+            list.innerHTML = '';
+
+            quizData.forEach((q, idx) => {
+                if (currentFilter !== 'all' && q.category !== currentFilter) {
+                    return;
+                }
+
+                const card = document.createElement('div');
+                card.className = 'q-card';
+                card.id = `q-card-${idx}`;
+
+                const state = userAnswers[idx];
+
+                let optionsHtml = '';
+                q.options.forEach((opt, optIdx) => {
+                    let optClass = 'opt-btn';
+                    let icon = '';
+
+                    if (state) {
+                        if (optIdx === q.answer) {
+                            optClass += ' correct';
+                            icon = '✅';
+                        } else if (state.chosen === optIdx && !state.isCorrect) {
+                            optClass += ' wrong';
+                            icon = '❌';
+                        }
+                    }
+
+                    const disabledAttr = state ? 'disabled' : '';
+
+                    optionsHtml += `
+                        <button class="${optClass}" ${disabledAttr} onclick="selectAnswer(${idx}, ${optIdx})">
+                            <span>${opt}</span>
+                            <span class="opt-icon">${icon}</span>
+                        </button>
+                    `;
+                });
+
+                let feedbackHtml = '';
+                if (state) {
+                    const bgClass = state.isCorrect ? 'success-bg' : 'danger-bg';
+                    const titleText = state.isCorrect ? 'إجابة صحيحة وممتازة!' : 'إجابة خاطئة، الإجابة المعتمدة موضحة بالأعلى باللون الأخضر.';
+                    feedbackHtml = `
+                        <div class="q-feedback show ${bgClass}">
+                            <strong>${titleText}</strong>
+                            <p style="margin-top: 5px; font-weight: 500;">💡 توضيح وإجراء الـ OJT: ${q.explanation}</p>
+                        </div>
+                    `;
+                }
+
+                card.innerHTML = `
+                    <div class="q-header">
+                        <span class="q-number">سؤال ${idx + 1}</span>
+                        <span class="q-tag">${q.category}</span>
+                        <span class="q-watermark-stamp">GARHII</span>
+                    </div>
+                    <div class="q-title">${q.question}</div>
+                    <div class="options-list">
+                        ${optionsHtml}
+                    </div>
+                    ${feedbackHtml}
+                `;
+
+                list.appendChild(card);
+            });
+        }
+
+        function selectAnswer(qIndex, chosenIndex) {
+            if (userAnswers[qIndex]) return;
+
+            const isCorrect = chosenIndex === quizData[qIndex].answer;
+            userAnswers[qIndex] = {
+                chosen: chosenIndex,
+                isCorrect: isCorrect
+            };
+
+            updateStats();
+            renderQuestions();
+        }
+
+        function updateStats() {
+            const answeredCount = Object.keys(userAnswers).length;
+            let correctCount = 0;
+            let wrongCount = 0;
+
+            Object.values(userAnswers).forEach(ans => {
+                if (ans.isCorrect) correctCount++;
+                else wrongCount++;
+            });
+
+            document.getElementById('stat-answered').innerText = answeredCount;
+            document.getElementById('stat-correct').innerText = correctCount;
+            document.getElementById('stat-wrong').innerText = wrongCount;
+
+            const percent = Math.round((answeredCount / quizData.length) * 100);
+            document.getElementById('progress-percent').innerText = `${percent}%`;
+            document.getElementById('progress-bar').style.width = `${percent}%`;
+        }
+
+        function showFinalResult() {
+            const answeredCount = Object.keys(userAnswers).length;
+            if (answeredCount === 0) {
+                alert('يرجى البدء في حل بعض الأسئلة أولاً قبل عرض النتيجة!');
+                return;
+            }
+
+            let correctCount = 0;
+            Object.values(userAnswers).forEach(ans => {
+                if (ans.isCorrect) correctCount++;
+            });
+
+            const scorePercent = Math.round((correctCount / quizData.length) * 100);
+            const modal = document.getElementById('result-modal');
+            const headline = document.getElementById('modal-headline');
+            const scoreDisplay = document.getElementById('modal-percentage');
+            const desc = document.getElementById('modal-summary');
+            const icon = document.getElementById('modal-icon');
+
+            scoreDisplay.innerText = `${scorePercent}%`;
+
+            if (scorePercent >= 85) {
+                icon.innerText = '🌟';
+                headline.innerText = 'ممتاز جداً! جاهز للـ OJT باقتدار';
+                desc.innerText = `أجبت على ${correctCount} من إجمالي ${quizData.length} سؤال بشكل صحيح. استيعابك للإجراءات والأنظمة والـ SRS ممتاز!`;
+            } else if (scorePercent >= 65) {
+                icon.innerText = '👍';
+                headline.innerText = 'مستوى جيد، بحاجة لمراجعة بعض السيناريوهات';
+                desc.innerText = `أجبت على ${correctCount} من إجمالي ${quizData.length} سؤال. راجع الأسئلة الموضحة باللون الأحمر لتثبيت خطوات الـ Verification والإتاحة.`;
+            } else {
+                icon.innerText = '📚';
+                headline.innerText = 'بحاجة لمزيد من المذاكرة والتركيز';
+                desc.innerText = `أجبت على ${correctCount} من إجمالي ${quizData.length} سؤال. يُفضل مراجعة ملفات الـ Early Renew والـ Check Availability بعناية.`;
+            }
+
+            modal.classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('result-modal').classList.remove('active');
+        }
+
+        function resetQuiz() {
+            if (confirm('هل أنت متأكد من رغبتك في إعادة تعيين كافة الإجابات والبدء من جديد؟')) {
+                userAnswers = {};
+                updateStats();
+                renderQuestions();
+            }
+        }
+
+        // Initialize on load
+        window.onload = initApp;
+    </script>
+</body>
+</html>
