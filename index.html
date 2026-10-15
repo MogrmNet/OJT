@@ -1,790 +1,717 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>بنك أسئلة تدريب OJT الشامل - خدمة العملاء والدعم الفني</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --primary: #4f46e5;
-            --primary-dark: #3730a3;
-            --primary-light: #e0e7ff;
-            --accent: #0ea5e9;
-            --success: #10b981;
-            --success-light: #d1fae5;
-            --danger: #ef4444;
-            --danger-light: #fee2e2;
-            --warning: #f59e0b;
-            --bg-main: #f8fafc;
-            --bg-card: #ffffff;
-            --text-main: #0f172a;
-            --text-muted: #64748b;
-            --border: #e2e8f0;
-            --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.03);
-            --radius: 16px;
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Cairo', system-ui, -apple-system, sans-serif;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        body {
-            background-color: var(--bg-main);
-            color: var(--text-main);
-            line-height: 1.6;
-            padding: 20px 12px;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            position: relative;
-        }
-
-        /* Full Background Watermark Overlay - تم عمله بواسطه GARHII */
-        .watermark-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            pointer-events: none;
-            z-index: 999;
-            opacity: 0.05;
-            background-repeat: repeat;
-            background-size: 320px 220px;
-            background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='320' height='220' viewBox='0 0 320 220'><text x='50%' y='50%' font-size='19' font-weight='900' font-family='sans-serif' fill='%23000' text-anchor='middle' dominant-baseline='middle' transform='rotate(-28 160 110)'>تم عمله بواسطه GARHII</text></svg>");
-        }
-
-        .container {
-            width: 100%;
-            max-width: 900px;
-            position: relative;
-            z-index: 10;
-        }
-
-        /* Watermark Ribbon Bar */
-        .watermark-banner {
-            background: linear-gradient(90deg, #1e1b4b, #312e81, #1e1b4b);
-            color: #fbbf24;
-            text-align: center;
-            padding: 9px 16px;
-            border-radius: 12px;
-            font-weight: 800;
-            font-size: 0.95rem;
-            letter-spacing: 0.5px;
-            margin-bottom: 16px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-            border: 1px solid rgba(251, 191, 36, 0.3);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .watermark-banner span {
-            color: #ffffff;
-            font-weight: 900;
-            text-decoration: underline;
-        }
-
-        /* Header Card */
-        .header-card {
-            background: linear-gradient(135deg, #3730a3, #4f46e5 60%, #6366f1);
-            color: white;
-            padding: 32px 26px;
-            border-radius: var(--radius);
-            box-shadow: 0 20px 30px -10px rgba(79, 70, 229, 0.35);
-            margin-bottom: 22px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .header-card::after {
-            content: '';
-            position: absolute;
-            top: -50px;
-            left: -50px;
-            width: 180px;
-            height: 180px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
-        }
-
-        .badge-header {
-            display: inline-block;
-            background: rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(8px);
-            padding: 5px 16px;
-            border-radius: 50px;
-            font-size: 0.85rem;
-            font-weight: 700;
-            margin-bottom: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.25);
-        }
-
-        .header-title {
-            font-size: 1.85rem;
-            font-weight: 900;
-            margin-bottom: 10px;
-            line-height: 1.35;
-        }
-
-        .header-subtitle {
-            font-size: 0.96rem;
-            color: #e0e7ff;
-            max-width: 720px;
-            line-height: 1.6;
-        }
-
-        /* Stats Bar */
-        .stats-bar {
-            background: var(--bg-card);
-            border-radius: var(--radius);
-            padding: 18px 20px;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-            gap: 16px;
-            margin-bottom: 20px;
-            box-shadow: var(--shadow);
-            border: 1px solid var(--border);
-        }
-
-        .stat-item {
-            text-align: center;
-        }
-
-        .stat-value {
-            font-size: 1.5rem;
-            font-weight: 900;
-            color: var(--primary);
-        }
-
-        .stat-value.green { color: var(--success); }
-        .stat-value.red { color: var(--danger); }
-
-        .stat-label {
-            font-size: 0.82rem;
-            color: var(--text-muted);
-            font-weight: 700;
-        }
-
-        /* Progress Tracker */
-        .progress-box {
-            background: var(--bg-card);
-            border-radius: 12px;
-            padding: 16px 20px;
-            margin-bottom: 20px;
-            border: 1px solid var(--border);
-            box-shadow: var(--shadow);
-        }
-
-        .progress-text {
-            display: flex;
-            justify-content: space-between;
-            font-size: 0.88rem;
-            font-weight: 700;
-            margin-bottom: 8px;
-        }
-
-        .progress-track {
-            height: 11px;
-            background: #e2e8f0;
-            border-radius: 20px;
-            overflow: hidden;
-        }
-
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #6366f1, #10b981);
-            width: 0%;
-            border-radius: 20px;
-            transition: width 0.4s ease;
-        }
-
-        /* Filter Pills */
-        .filter-container {
-            display: flex;
-            gap: 8px;
-            overflow-x: auto;
-            padding-bottom: 12px;
-            margin-bottom: 20px;
-            scrollbar-width: thin;
-        }
-
-        .filter-btn {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            padding: 8px 16px;
-            border-radius: 30px;
-            font-size: 0.84rem;
-            font-weight: 700;
-            color: var(--text-muted);
-            cursor: pointer;
-            white-space: nowrap;
-            transition: all 0.2s ease;
-        }
-
-        .filter-btn:hover {
-            border-color: var(--primary);
-            color: var(--primary);
-        }
-
-        .filter-btn.active {
-            background: var(--primary);
-            color: white;
-            border-color: var(--primary);
-            box-shadow: 0 4px 12px rgba(79, 70, 229, 0.25);
-        }
-
-        /* Question Cards */
-        .questions-container {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        .q-card {
-            background: var(--bg-card);
-            border-radius: var(--radius);
-            padding: 24px;
-            border: 1px solid var(--border);
-            box-shadow: var(--shadow);
-            transition: all 0.2s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .q-card:hover {
-            border-color: #cbd5e1;
-        }
-
-        .q-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 14px;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-
-        .q-number {
-            font-size: 0.85rem;
-            font-weight: 800;
-            color: var(--primary);
-            background: var(--primary-light);
-            padding: 4px 12px;
-            border-radius: 8px;
-        }
-
-        .q-tag {
-            font-size: 0.78rem;
-            font-weight: 700;
-            color: var(--text-muted);
-            background: #f1f5f9;
-            padding: 4px 10px;
-            border-radius: 6px;
-        }
-
-        .q-watermark-stamp {
-            font-size: 0.72rem;
-            font-weight: 800;
-            color: #cbd5e1;
-            letter-spacing: 0.5px;
-        }
-
-        .q-title {
-            font-size: 1.12rem;
-            font-weight: 800;
-            color: var(--text-main);
-            margin-bottom: 18px;
-            line-height: 1.55;
-        }
-
-        .options-list {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .opt-btn {
-            background: #f8fafc;
-            border: 1.5px solid var(--border);
-            border-radius: 12px;
-            padding: 14px 18px;
-            text-align: right;
-            font-size: 0.95rem;
-            font-weight: 600;
-            color: var(--text-main);
-            cursor: pointer;
-            transition: all 0.2s ease;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .opt-btn:hover:not(:disabled) {
-            background: #f1f5f9;
-            border-color: #94a3b8;
-            transform: translateX(-3px);
-        }
-
-        .opt-btn:disabled {
-            cursor: default;
-        }
-
-        /* Option Feedback States */
-        .opt-btn.correct {
-            background: var(--success-light) !important;
-            border-color: var(--success) !important;
-            color: #065f46 !important;
-            font-weight: 800;
-        }
-
-        .opt-btn.wrong {
-            background: var(--danger-light) !important;
-            border-color: var(--danger) !important;
-            color: #991b1b !important;
-            font-weight: 800;
-        }
-
-        .opt-icon {
-            font-size: 1.2rem;
-            min-width: 24px;
-            text-align: left;
-        }
-
-        /* Feedback Explanation */
-        .q-feedback {
-            margin-top: 16px;
-            padding: 14px 16px;
-            border-radius: 10px;
-            font-size: 0.88rem;
-            font-weight: 600;
-            line-height: 1.55;
-            display: none;
-            animation: fadeIn 0.3s ease-in-out;
-        }
-
-        .q-feedback.show {
-            display: block;
-        }
-
-        .q-feedback.success-bg {
-            background: #ecfdf5;
-            color: #065f46;
-            border-right: 4px solid var(--success);
-        }
-
-        .q-feedback.danger-bg {
-            background: #fef2f2;
-            color: #991b1b;
-            border-right: 4px solid var(--danger);
-        }
-
-        /* Bottom Control & Reset */
-        .action-bar {
-            margin-top: 30px;
-            display: flex;
-            justify-content: center;
-            gap: 14px;
-            flex-wrap: wrap;
-        }
-
-        .main-btn {
-            background: var(--primary);
-            color: white;
-            border: none;
-            padding: 14px 28px;
-            border-radius: 12px;
-            font-size: 1rem;
-            font-weight: 800;
-            cursor: pointer;
-            box-shadow: 0 4px 15px rgba(79, 70, 229, 0.3);
-            transition: all 0.2s ease;
-        }
-
-        .main-btn:hover {
-            background: var(--primary-dark);
-            transform: translateY(-2px);
-        }
-
-        .secondary-btn {
-            background: white;
-            color: var(--text-main);
-            border: 1.5px solid var(--border);
-            padding: 14px 24px;
-            border-radius: 12px;
-            font-size: 1rem;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        .secondary-btn:hover {
-            background: #f8fafc;
-            border-color: #94a3b8;
-        }
-
-        /* Result Modal */
-        .modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(15, 23, 42, 0.65);
-            backdrop-filter: blur(5px);
-            display: none;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            z-index: 1000;
-        }
-
-        .modal.active {
-            display: flex;
-            animation: fadeIn 0.25s ease-out;
-        }
-
-        .modal-card {
-            background: white;
-            border-radius: 20px;
-            padding: 36px 28px;
-            max-width: 480px;
-            width: 100%;
-            text-align: center;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-            position: relative;
-        }
-
-        .modal-watermark {
-            font-size: 0.78rem;
-            color: #94a3b8;
-            font-weight: 800;
-            margin-bottom: 12px;
-        }
-
-        .result-badge {
-            font-size: 3.5rem;
-            margin-bottom: 10px;
-        }
-
-        .modal-title {
-            font-size: 1.6rem;
-            font-weight: 900;
-            margin-bottom: 10px;
-        }
-
-        .modal-score {
-            font-size: 2.6rem;
-            font-weight: 900;
-            color: var(--primary);
-            margin-bottom: 12px;
-        }
-
-        .modal-desc {
-            font-size: 0.95rem;
-            color: var(--text-muted);
-            margin-bottom: 24px;
-            line-height: 1.6;
-        }
-
-        /* Footer */
-        footer {
-            margin-top: 40px;
-            text-align: center;
-            font-size: 0.88rem;
-            color: var(--text-muted);
-            font-weight: 700;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(6px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @media (max-width: 640px) {
-            .header-title { font-size: 1.45rem; }
-            .q-card { padding: 18px; }
-            .stats-bar { grid-template-columns: repeat(2, 1fr); gap: 12px; }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>WE CCA | OJT Training Hub</title>
+<meta name="description" content="مرجع تدريبي تفاعلي شخصي لسيناريوهات خدمة العملاء الفنية أثناء فترة OJT">
+<style>
+:root{--bg:#f5f3fb;--card:#ffffff;--text:#1f1633;--muted:#6b6380;--p:#4c1d95;--p2:#7c3aed;--soft:#ede9fe;--line:#e2dcf3;--ok:#15803d;--okbg:#dcfce7;--bad:#b91c1c;--badbg:#fee2e2;--warn:#b45309;--warnbg:#fef3c7;--shadow:0 4px 18px rgba(76,29,149,.09);--side:285px}
+[data-theme="dark"]{--bg:#120c22;--card:#1c1431;--text:#efeafc;--muted:#a79fc0;--p:#c4b5fd;--p2:#8b5cf6;--soft:#2a1f47;--line:#352a58;--ok:#4ade80;--okbg:#12301f;--bad:#f87171;--badbg:#3a1414;--warn:#fbbf24;--warnbg:#3a2c0b;--shadow:0 4px 18px rgba(0,0,0,.4)}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:"Segoe UI",Tahoma,"Noto Naskh Arabic","Noto Sans Arabic",Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.85;font-size:16px}
+.ltr{direction:ltr;unicode-bidi:isolate;display:inline-block}
+button{font-family:inherit;cursor:pointer}
+a{color:var(--p2);text-decoration:none}
+header{position:fixed;top:0;right:0;left:0;height:62px;background:linear-gradient(90deg,#3b1480,#6d28d9);color:#fff;display:flex;align-items:center;gap:10px;padding:0 14px;z-index:50;box-shadow:0 2px 12px rgba(0,0,0,.25)}
+header .brand{font-weight:800;font-size:1.05rem;white-space:nowrap}
+.hbtn{background:rgba(255,255,255,.16);color:#fff;border:0;border-radius:10px;padding:8px 12px;font-size:.9rem}
+.hbtn:hover{background:rgba(255,255,255,.28)}
+#menuBtn{display:none}
+.searchWrap{position:relative;flex:1;max-width:520px;margin-inline-start:auto}
+#search{width:100%;border:0;border-radius:12px;padding:9px 14px;font-family:inherit;font-size:.95rem;background:rgba(255,255,255,.95);color:#1f1633}
+#results{position:absolute;top:46px;right:0;left:0;background:var(--card);color:var(--text);border-radius:12px;box-shadow:var(--shadow);max-height:60vh;overflow:auto;display:none;border:1px solid var(--line)}
+#results a{display:block;padding:10px 14px;border-bottom:1px solid var(--line);color:var(--text)}
+#results a:hover{background:var(--soft)}
+#results small{color:var(--muted);display:block}
+.topbar{position:fixed;top:62px;right:0;left:0;height:5px;background:rgba(124,58,237,.18);z-index:49}
+.topbar i{display:block;height:100%;width:0;background:linear-gradient(90deg,#a78bfa,#f0abfc);transition:width .4s}
+aside{position:fixed;top:67px;bottom:0;right:0;width:var(--side);background:var(--card);border-left:1px solid var(--line);overflow:auto;padding:14px 10px 30px;z-index:40}
+aside h4{margin:14px 8px 6px;color:var(--muted);font-size:.8rem;letter-spacing:.5px}
+aside a{display:flex;gap:8px;align-items:center;padding:8px 10px;border-radius:10px;color:var(--text);font-size:.93rem}
+aside a:hover{background:var(--soft)}
+aside a.active{background:var(--p2);color:#fff}
+aside a .n{min-width:24px;height:24px;border-radius:50%;background:var(--soft);color:var(--p);display:grid;place-items:center;font-size:.75rem;font-weight:700}
+aside a.active .n{background:rgba(255,255,255,.25);color:#fff}
+aside a .tick{margin-inline-start:auto;color:var(--ok);font-size:.85rem}
+main{margin-right:var(--side);padding:92px 26px 50px;max-width:1100px}
+.hero{background:linear-gradient(135deg,#3b1480,#7c3aed 60%,#c026d3);color:#fff;border-radius:22px;padding:30px 28px;box-shadow:var(--shadow)}
+.hero h1{margin:0 0 6px;font-size:2rem}
+.hero p{margin:0;opacity:.92}
+.grid{display:grid;gap:14px;margin:18px 0}
+.g4{grid-template-columns:repeat(4,1fr)}
+.g2{grid-template-columns:repeat(2,1fr)}
+.g3{grid-template-columns:repeat(auto-fill,minmax(240px,1fr))}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px 20px;box-shadow:var(--shadow)}
+.stat b{display:block;font-size:2rem;color:var(--p2);line-height:1.2}
+.stat span{color:var(--muted);font-size:.92rem}
+.bar{height:12px;background:var(--soft);border-radius:99px;overflow:hidden;margin-top:8px}
+.bar i{display:block;height:100%;background:linear-gradient(90deg,#7c3aed,#d946ef);border-radius:99px;transition:width .4s}
+.btn{border:0;border-radius:12px;padding:11px 18px;font-size:1rem;font-weight:700;background:var(--p2);color:#fff;display:inline-block}
+.btn:hover{filter:brightness(1.1)}
+.btn.ghost{background:var(--soft);color:var(--p)}
+.btn.danger{background:var(--bad);color:#fff}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.row{display:flex;flex-wrap:wrap;gap:10px;margin:14px 0}
+h2{color:var(--p);margin:26px 0 10px}
+h3{margin:0 0 8px;color:var(--p);font-size:1.08rem;display:flex;gap:8px;align-items:center}
+h3 .num{background:var(--p2);color:#fff;border-radius:8px;min-width:26px;height:26px;display:grid;place-items:center;font-size:.8rem}
+.secHead{background:linear-gradient(135deg,#3b1480,#7c3aed);color:#fff;border-radius:20px;padding:22px 26px;margin-bottom:16px}
+.secHead h1{margin:0;font-size:1.6rem}
+.secHead .en{opacity:.9;font-size:1.1rem}
+.badge{display:inline-block;background:var(--warnbg);color:var(--warn);border:1px solid var(--warn);border-radius:99px;padding:2px 12px;font-size:.8rem;font-weight:700}
+.chip{display:inline-block;background:var(--soft);color:var(--p);border-radius:99px;padding:2px 12px;font-size:.8rem;font-weight:700}
+.chip.ghost{background:transparent;border:1px solid var(--line);color:var(--muted)}
+ul,ol{margin:6px 0;padding-inline-start:22px}
+li{margin:4px 0}
+li.warn{background:var(--warnbg);color:var(--warn);border-radius:8px;padding:4px 10px;list-style:none;margin-inline-start:-22px;font-weight:600}
+.script{background:var(--soft);border-inline-start:5px solid var(--p2);border-radius:10px;padding:10px 14px;margin:8px 0}
+.script small{color:var(--muted);display:block;font-weight:700}
+.dec li{list-style:none;margin-inline-start:-18px}
+.mist{border-inline-start:5px solid var(--bad)}
+.sum{border-inline-start:5px solid var(--ok)}
+.confirmBox{background:var(--warnbg);color:var(--warn);border:1px dashed var(--warn);border-radius:12px;padding:10px 14px;margin:10px 0}
+.qcard{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px 18px;margin:14px 0;box-shadow:var(--shadow)}
+.qtext{font-weight:700;font-size:1.05rem;margin:8px 0 12px}
+.opts{display:grid;gap:9px}
+.opt{display:flex;gap:10px;align-items:center;text-align:start;background:var(--bg);border:2px solid var(--line);border-radius:12px;padding:10px 14px;color:var(--text);font-size:1rem}
+.opt b{background:var(--soft);color:var(--p);border-radius:8px;min-width:30px;height:30px;display:grid;place-items:center;font-family:Arial,sans-serif}
+.opt:not(:disabled):hover{border-color:var(--p2);background:var(--soft)}
+.opt:disabled{cursor:default}
+.opt.right{border-color:var(--ok);background:var(--okbg)}
+.opt.wrong{border-color:var(--bad);background:var(--badbg)}
+.fb{margin-top:12px;border-radius:12px;padding:10px 14px}
+.fb.ok{background:var(--okbg);color:var(--ok)}
+.fb.bad{background:var(--badbg);color:var(--bad)}
+.fb p{margin:4px 0;color:var(--text)}
+.lvls{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+.lvls button{border:2px solid var(--line);background:var(--card);color:var(--text);border-radius:99px;padding:6px 16px;font-weight:700}
+.lvls button.on{background:var(--p2);color:#fff;border-color:var(--p2)}
+.score{text-align:center;padding:28px}
+.score .big{font-size:3.2rem;font-weight:800;color:var(--p2)}
+table{width:100%;border-collapse:collapse}
+td,th{border-bottom:1px solid var(--line);padding:10px;text-align:start;vertical-align:top}
+th{color:var(--p)}
+.gl{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.gl .card{padding:14px 16px}
+.gl h3{direction:ltr;text-align:right;margin-bottom:4px}
+footer.note{margin-top:34px;padding:14px 18px;border-radius:14px;background:var(--soft);color:var(--muted);font-size:.88rem}
+.tags a{display:inline-block;margin:4px;background:var(--soft);color:var(--p);padding:4px 14px;border-radius:99px;font-weight:700;direction:ltr}
+@media(max-width:900px){
+ #menuBtn{display:block}
+ aside{transform:translateX(105%);transition:transform .25s;box-shadow:-6px 0 24px rgba(0,0,0,.3)}
+ body.menu-open aside{transform:none}
+ main{margin-right:0;padding:90px 14px 40px}
+ .g4{grid-template-columns:repeat(2,1fr)}
+ .g2{grid-template-columns:1fr}
+ .hero h1{font-size:1.45rem}
+ header .brand span{display:none}
+ .hbtn.txt{display:none}
+}
+@media print{
+ header,.topbar,aside,.row,.btn,.lvls,.qcard,.searchWrap,.noprint{display:none!important}
+ main{margin:0;padding:0;max-width:none}
+ body{background:#fff;color:#000}
+ .card,.secHead,.hero{box-shadow:none;background:#fff!important;color:#000!important;border:1px solid #999;break-inside:avoid}
+ .secHead h1,.hero h1{color:#000}
+ section.printSec{page-break-before:always}
+}
+</style>
 </head>
 <body>
+<header>
+ <button class="hbtn" id="menuBtn" aria-label="القائمة">☰</button>
+ <div class="brand">WE CCA <span>| OJT Training Hub</span></div>
+ <div class="searchWrap">
+  <input id="search" type="search" placeholder="ابحث عن سيناريو أو مصطلح..." autocomplete="off">
+  <div id="results"></div>
+ </div>
+ <button class="hbtn" id="themeBtn" title="تبديل الوضع">🌙</button>
+ <button class="hbtn txt" id="printBtn" title="طباعة / حفظ PDF">🖨 طباعة</button>
+</header>
+<div class="topbar"><i id="topProg"></i></div>
+<aside id="side"></aside>
+<main id="main"></main>
 
-    <!-- Watermark Background Overlay -->
-    <div class="watermark-bg"></div>
+<script>
+"use strict";
+/* ===================== البيانات ===================== */
+var LV={1:"Basic",2:"Intermediate",3:"Scenario Challenge"};
 
-    <div class="container">
-        <!-- Top Watermark Banner -->
-        <div class="watermark-banner">
-            🛡️ تم عمله بواسطه <span>"GARHII"</span> - بنك أسئلة OJT الشامل
-        </div>
+var SECTIONS=[
+{id:"s1",ar:"افتتاح المكالمة",en:"Call Opening",
+ problem:"افتتاح المكالمة بأسلوب مهني، والحفاظ على التواصل مع العميل أثناء مراجعة بياناته، وإظهار التعاطف مع شكواه.",
+ when:"في بداية كل مكالمة، وأثناء فتح بيانات العميل على السيستم، وعند شكوى العميل من مشكلة أو من بطء الإنترنت.",
+ signs:["لا توجد أعراض فنية في هذا القسم؛ هو خاص بأسلوب التواصل.","العميل ينتظر على الخط أثناء مراجعتك لبياناته.","العميل يشتكي من مشكلة أو من بطء الإنترنت."],
+ steps:["قل التحية وعرّف بنفسك: «WE، مع حضرتك [اسم الموظف]».","اسأل عن اسم العميل واستخدمه أثناء الحديث.","اطلب الرقم الأرضي بكود المحافظة، واسأل كيف تقدر تساعده.","أثناء فتح الخط على السيستم لا تترك العميل في صمت؛ أبلغه أنك تراجع حالة الخط.","عند الشكوى: اعتذر وعبّر عن التعاطف ووضح أنك ستراجع الحالة وتنفذ الخطوات المناسبة.","عند الشكوى من البطء: أظهر تقديرك لأهمية انتظام الخدمة وأنك ستتابع حسب الإجراء المعتمد."],
+ decision:["إذا كنت تراجع بيانات العميل ← أبلغه بذلك واستمر في التواصل معه ولا تصمت.","إذا اشتكى العميل من مشكلة ← ابدأ بالتعاطف ثم راجع الحالة.","إذا اشتكى من بطء الإنترنت ← استخدم سكريبت الاهتمام بانتظام الخدمة."],
+ sysq:["لا توجد أسئلة أو اختيارات للسيستم في هذا القسم."],
+ script:[
+  {h:"الافتتاح",t:"«صباح الخير/مساء الخير، WE، مع حضرتك [اسم الموظف].»"},
+  {h:"الاسم",t:"«أتشرف بمعرفة اسم حضرتك.»"},
+  {h:"الترحيب",t:"«أهلًا بيك يا أستاذ [اسم العميل]، يا رب تكون بخير.»"},
+  {h:"الرقم",t:"«استأذنك توضحلي الرقم الأرضي بكود المحافظة، وأقدر أساعد حضرتك إزاي؟»"},
+  {h:"أثناء فتح الخط على السيستم",t:"«يا أستاذ [الاسم]، أنا حاليًا هدخل أراجع تفاصيل أكتر عن حالة خط حضرتك، وإن شاء الله أقدر أساعدك. متقلقش، أنا معاك.»"},
+  {h:"Empathy — التعاطف",t:"«بعتذر جدًا لحضرتك عن المشكلة اللي بتواجهك. أنا موجود معاك يا أستاذ [الاسم]، وهنراجع الحالة وننفذ الخطوات المناسبة علشان نساعدك.»"},
+  {h:"الشكوى من بطء الإنترنت",t:"«أنا مقدر جدًا أهمية إن خدمة الإنترنت تكون منتظمة وسريعة عند حضرتك، وعشان كده بنهتم بمراجعة أي مشكلة بتأثر على الخدمة ونتابعها حسب الإجراء المعتمد.»"}],
+ mistakes:["ترك العميل في صمت أثناء مراجعة البيانات.","إنهاء المكالمة أو طلب الاتصال مرة أخرى بدل المتابعة.","وعد العميل بحل المشكلة خلال دقائق دون ضمان ذلك."],
+ summary:"رحّب، اعرف الاسم والرقم، لا تصمت أثناء فتح البيانات، وعبّر عن التعاطف مع الخطوات الواقعية فقط.",
+ confirm:[]},
 
-        <!-- Header -->
-        <header class="header-card">
-            <span class="badge-header">تدريب OJT العملي والفني | Alex & WE Team</span>
-            <h1 class="header-title">بنك الاختبارات التفاعلي لخدمة العملاء والدعم الفني</h1>
-            <p class="header-subtitle">شامل إجراءات الخطوط الجديدة، والتجديد المبكر (Early Renew)، وإتاحة الخط الأرضي والمعاينة (Check Availability)، بالإضافة لأنظمة العمل (Customer 360, HDM, BSS, TTS, SharePoint, Radius, MSAN).</p>
-        </header>
+{id:"s2",ar:"الإنترنت متصل لكن لا يوجد اتصال فعلي",en:"Browsing",
+ problem:"العميل متصل بالراوتر لكن لا يستطيع تصفح الإنترنت.",
+ when:"عندما يشتكي العميل من عدم عمل الإنترنت مع بقاء الجهاز متصلًا بالراوتر.",
+ signs:["الإنترنت لا يعمل.","توجد علامة تعجب أو استفهام على الاتصال.","تظهر رسالة Login.","الجهاز متصل بالراوتر ولكن لا يوجد إنترنت."],
+ steps:["السيناريو الأول (اللمبات UP): تأكد من حالة اللمبات، ثم راجع الـ Logs ونتيجة الفحص، وتابع مسار الـ Troubleshooting بناءً على النتيجة، ثم تحقق من عودة الخدمة.","السيناريو الثالث (اختلاف بيانات Account): راجع بيانات الـ Account في الحقول المطلوبة، وتأكد من تطابق القيم وفقًا للمسار الصحيح، وعند وجود اختلاف اتبع إجراء التصحيح المعتمد.","السيناريو الرابع (بيانات Account غير صحيحة): راجع بيانات الحساب، ادخل إلى صفحة الراوتر عند الحاجة، صحّح البيانات فقط بالقيم المعتمدة، ثم أعد التحقق من الاتصال.","السيناريو السادس (لا توجد مشكلة واضحة): أكمل خطوات الفحص، جرّب Restart إذا كان مناسبًا ومسموحًا به في الـ Flow، وتحقق من عمل الإنترنت، وإن استمرت المشكلة أكمل التشخيص والتصعيد المعتمد."],
+ decision:["إذا كانت اللمبات UP ← راجع Logs ونتيجة الفحص واتبع الـ Flow.","إذا اختلفت بيانات Account ← اتبع إجراء التصحيح المعتمد.","إذا كانت بيانات Account غير صحيحة ← صحّحها بالقيم المعتمدة فقط ثم أعد التحقق.","إذا لم توجد مشكلة واضحة ← أكمل الفحص وجرّب Restart إن كان مسموحًا، وإلا فصعّد حسب المعتمد.","⚠️ السيناريو الثاني (حالة مرتبطة بالـ HDM مع الانتظار دقيقة): الاسم والخطوة التالية غير واضحين — تحتاج إلى تأكيد."],
+ sysq:["⚠️ اختيارات HDM المرتبطة بالسيناريو الثاني: مصطلح يحتاج إلى تأكيد.","⚠️ إعدادات الخدمة في صفحة الراوتر (السيناريو الخامس): اسم الإعداد غير واضح — يحتاج إلى تأكيد."],
+ script:[{h:"سكريبت",t:"لا يوجد سكريبت مخصص لهذا القسم في المادة. يمكن استخدام سكريبت التعاطف من قسم «افتتاح المكالمة»."}],
+ mistakes:["تغيير إعدادات الراوتر عشوائيًا.","إدخال أي بيانات للحساب لمجرد أن يعمل الإنترنت.","إغلاق المكالمة أو التصعيد المباشر دون فحص.","ذكر اسم إعداد أو اختيار غير مؤكد."],
+ summary:"اللمبات UP ← Logs ونتيجة الفحص ثم الـ Flow. بيانات Account الخاطئة تُصحَّح بالقيم المعتمدة فقط. ما لم يتأكد اسمه لا تذكره.",
+ confirm:["اسم حالة HDM والخطوة التالية في السيناريو الثاني","اسم إعدادات الخدمة في صفحة الراوتر"]},
 
-        <!-- Stats Bar -->
-        <div class="stats-bar">
-            <div class="stat-item">
-                <div class="stat-value" id="stat-total">0</div>
-                <div class="stat-label">إجمالي الأسئلة</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-value" id="stat-answered">0</div>
-                <div class="stat-label">تمت الإجابة</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-value green" id="stat-correct">0</div>
-                <div class="stat-label">إجابات صحيحة</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-value red" id="stat-wrong">0</div>
-                <div class="stat-label">إجابات خاطئة</div>
-            </div>
-        </div>
+{id:"s3",ar:"لمبة الإنترنت حمراء / لا يوجد IP",en:"Internet LED Red / No IP",
+ problem:"لمبة الإنترنت حمراء أو مطفأة، والراوتر لا يحصل على IP، وقد تكون بقية اللمبات UP.",
+ when:"عندما يكون الراوتر بدون IP أو لمبة الإنترنت حمراء/مطفأة.",
+ signs:["لمبة الإنترنت حمراء أو مطفأة.","الراوتر لا يحصل على IP.","قد تكون بقية اللمبات في حالة UP."],
+ steps:["اتبع الـ Troubleshooting Flow.","حدد نتيجة كل خطوة.","حدد نوع الراوتر.","⚠️ التسجيل يذكر النوعين 530 و531 لكن الاسمين يحتاجان إلى تأكيد.","في حالة محددة ذكر المدرب فصل الكهرباء وإعادة توصيلها.","إن استمرت المشكلة تابع فحص MAC وIP حسب الـ Flow.","إذا طُلبت Screenshot أرفقها في المكان المخصص وفق تعليمات العمل.","أكمل خطوات الفحص والتصعيد حسب النتيجة."],
+ decision:["اسأل: «هل حضرتك أجريت أي تغييرات في إعدادات الراوتر مؤخرًا؟»","إذا أجاب بنعم ← حدد نوع التغيير واتبع المسار المناسب.","إذا أجاب بلا ← تحقق من بقية التفاصيل ومنها هل الراوتر جديد، وفق الـ Flow."],
+ sysq:["⚠️ اسما الراوترين 530 و531: يحتاجان إلى تأكيد."],
+ script:[{h:"سؤال التغييرات",t:"«هل حضرتك أجريت أي تغييرات في إعدادات الراوتر مؤخرًا؟»"}],
+ mistakes:["تغيير إعدادات غير معروفة.","إغلاق الشكوى فورًا.","ضمان الحل قبل الفحص."],
+ summary:"لا IP ← اتبع الـ Flow، حدد نوع الراوتر لأن التشخيص قد يختلف، واسأل عن تغييرات الإعدادات الأخيرة.",
+ confirm:["الاسم الدقيق لراوترَي 530 و531"]},
 
-        <!-- Progress Tracker -->
-        <div class="progress-box">
-            <div class="progress-text">
-                <span>نسبة الإنجاز في الاختبار</span>
-                <span id="progress-percent">0%</span>
-            </div>
-            <div class="progress-track">
-                <div class="progress-fill" id="progress-bar"></div>
-            </div>
-        </div>
+{id:"s4",ar:"عدم الاستقرار المنطقي",en:"Logical Instability",
+ problem:"العميل يقول إن الإنترنت بيفصل ويشتغل بشكل متكرر، مع ظهور اللمبات UP في الحالة المذكورة بالتسجيل.",
+ when:"عند شكوى فصل متكرر مع اللمبات UP وفق نتيجة الفحص ومسار Internet Stability / Instability.",
+ signs:["الإنترنت بيفصل ويشتغل بشكل متكرر.","اللمبات UP في الحالة المذكورة."],
+ steps:["راجع حالة اللمبات.","اختر مسار Internet Stability / Instability المناسب.","راجع Collection Date ونتيجة الفحص.","راجع عدد الانقطاعات خلال آخر 24 ساعة.","حدد الجهاز المستخدم: Laptop أو Computer أو Mobile.","حدد دعم الجهاز لشبكتي Wi-Fi وفقًا للحالة."],
+ decision:["لا توجد انقطاعات أو حالة واحدة ← راجع نتيجة الفحص وحدد الجهاز.","الجهاز يدعم الشبكتين ← وضّح الفرق بينهما وساعد العميل على اختيار الشبكة المناسبة.","الجهاز لا يدعم الشبكتين ← جرّب خطوات فحص الجهاز (Laptop/Computer: إعادة تشغيل، تجربة جهاز آخر، مراجعة مشكلة الجهاز أو إصدار Windows. Mobile: إعادة تشغيل، تجربة هاتف آخر).","وجود انقطاعات متكررة ← يُذكر Reset ثم تجربة الخدمة 24 ساعة في إحدى الحالات.","⚠️ في حالة أخرى: الانتظار مع العميل 3 دقائق بعد Reset، فإذا فصلت اللمبات يُتبع مسار التصعيد المذكور في النظام، وإلا يُكمل الفحص ويُتحقق من الاستقرار — يجب تأكيد التقسيم الدقيق وشروطه قبل اعتباره إجراءً رسميًا."],
+ sysq:["Internet Stability / Instability: اختيار المسار حسب الحالة.","⚠️ تقسيم الحالات حسب عدد الانقطاعات والفاصل الزمني: يحتاج إلى تأكيد."],
+ script:[{h:"سكريبت",t:"لا يوجد سكريبت مخصص لهذا القسم في المادة."}],
+ mistakes:["تغيير بيانات الحساب مباشرة.","افتراض أن الراوتر تالف.","ضمان عدم تكرار المشكلة مستقبلًا.","اعتبار التقسيم غير المؤكد إجراءً رسميًا."],
+ summary:"اللمبات UP + فصل متكرر ← مسار Logical Instability ونتيجة الفحص، حدد الجهاز، وراقب الاستقرار وفق الـ Flow.",
+ confirm:["شروط تقسيم Logical Instability حسب عدد الانقطاعات والفاصل الزمني"]},
 
-        <!-- Filter Categories -->
-        <div class="filter-container" id="category-filters">
-            <button class="filter-btn active" data-cat="all">جميع الأسئلة</button>
-        </div>
+{id:"s5",ar:"انقطاع الخدمة بالكامل",en:"Data Down",
+ problem:"العميل يعاني من انقطاع كامل للإنترنت، وقد تكون لمبة DSL أو Internet مطفأة أو حمراء.",
+ when:"عند الانقطاع الكامل للخدمة مع لمبة DSL/Internet مطفأة أو حمراء.",
+ signs:["انقطاع كامل لخدمة الإنترنت.","لمبة DSL أو Internet مطفأة أو حمراء."],
+ steps:["راجع عدد الـ Logs خلال آخر 12 ساعة (التسجيل ذكر حالة وجود 3 Logs).","حدد المسار المناسب حسب النتيجة.","جرّب Restart إذا كانت الخطوة مطلوبة، وتحقق من عودة الخدمة.","افحص التوصيلات: RJ11 (سلامة التوصيل وإعادته إن لزم)، السلك، التوصيل الرئيسي (إن كان غير موصل اتبع خطوات التوصيل المعتمدة).","تحقق من حالة اللمبات والخدمة بعد كل إجراء.","إن استمرت المشكلة أكمل التشخيص والتصعيد."],
+ decision:["إذا عادت الخدمة بعد Restart ← تحقق من عملها.","إذا استمرت المشكلة ← أكمل خطوات الفحص ثم التصعيد المعتمد.","⚠️ لا تفترض أن وجود 3 Logs يؤدي دائمًا إلى إجراء معين قبل مراجعة الـ Flow.","إذا كان الفحص المطلوب Clear View ← أبلغ العميل بالسكريبت أدناه."],
+ sysq:["Logs آخر 12 ساعة.","Clear View عند طلبه في الـ Flow.","⚠️ الترتيب الدقيق لفحص RJ11 والسلك والتوصيل الرئيسي: يحتاج إلى تأكيد."],
+ script:[
+  {h:"Clear View",t:"«أستاذ [الاسم]، أنا بعمل دلوقتي فحص على الخط علشان أراجع حالة الاتصال، والفحص متوقع ياخد أقل من دقيقتين.»"},
+  {h:"إذا تأخر الفحص",t:"«بعتذر لحضرتك لو الفحص أخد وقت أطول، لكن حابب أكمل مراجعة الحالة علشان أساعدك.»"}],
+ mistakes:["ضمان الحل دون فحص إضافي.","إغلاق المكالمة أو حذف سجل الحالة.","ربط عدد Logs بإجراء ثابت دون الرجوع للـ Flow."],
+ summary:"Logs 12 ساعة ثم Restart إن طُلب، ثم فحص RJ11 والسلك والتوصيل الرئيسي، وإن استمر العطل فاستكمل التشخيص والتصعيد.",
+ confirm:["شروط Data Down عند وجود 3 Logs خلال آخر 12 ساعة","الترتيب الدقيق لفحص RJ11 والسلك والتوصيل الرئيسي"]},
 
-        <!-- Questions List -->
-        <div class="questions-container" id="questions-list">
-            <!-- Rendered by JS -->
-        </div>
+{id:"s6",ar:"عدم الاستقرار الفيزيائي",en:"Physical Instability",
+ problem:"العميل يشتكي من أن الإنترنت بيفصل ويشتغل، ويُحدد المسار بعد مراجعة الأدوات.",
+ when:"عند شكوى الفصل المتكرر وبعد مراجعة بيانات الأدوات المذكورة لتحديد المسار.",
+ signs:["الإنترنت بيفصل ويشتغل."],
+ steps:["راجع الأدوات أو البيانات: 360 وBSS وADF وTTS.","اختر المسار المناسب بناءً على نتيجة الفحص.","إذا أشارت النتيجة إلى Logical Instability فانتقل إلى مسار Logical Instability."],
+ decision:["نتيجة الفحص تشير إلى Logical Instability ← انتقل إلى مسار Logical Instability.","⚠️ حالة باسم غير واضح (نطقه المدرب «الأزهر») مع تصعيد مباشر — الاسم والإجراء يحتاجان إلى تأكيد.","⚠️ ذُكر تعويض 3 جيجابايت لمدة يومين في حالة معينة — شروط الاستحقاق تحتاج إلى مراجعة."],
+ sysq:["⚠️ اسم الحالة «الأزهر»: يحتاج إلى تأكيد."],
+ script:[{h:"سكريبت",t:"لا يوجد سكريبت مخصص لهذا القسم في المادة."}],
+ mistakes:["الانتقال لمسار بالتخمين.","منح 3 جيجابايت لكل عميل لديه انقطاع.","تنفيذ إجراء التصعيد المباشر قبل تأكيد اسم الحالة."],
+ summary:"المسار يحدده الفحص والتشخيص المعتمد لا التخمين، والتعويض له شروط استحقاق تُراجع.",
+ confirm:["الاسم الصحيح للحالة التي نطقها المدرب «الأزهر»","شروط تعويض 3 جيجابايت في هذه الحالة"]},
 
-        <!-- Action Bar -->
-        <div class="action-bar">
-            <button class="main-btn" onclick="showFinalResult()">إنهاء وعرض النتيجة النهائية 📊</button>
-            <button class="secondary-btn" onclick="resetQuiz()">إعادة تعيين الاختبار 🔄</button>
-        </div>
+{id:"s7",ar:"اختلاف حالة اللمبات",en:"LED Status Mismatch",
+ problem:"حالة اللمبات في النظام تختلف عن الحالة الفعلية عند العميل. مثال: UP في إحدى جهات الفحص بينما تظهر DOWN عند العميل.",
+ when:"عند اختلاف حالة اللمبات بين ما تراه وما يصفه العميل.",
+ signs:["اللمبات UP في جهة الفحص وDOWN عند العميل."],
+ steps:["اختر مسار Internet المناسب.","حدد حالة اللمبات الفعلية عند العميل.","قارنها بالنتيجة المتاحة في النظام.","إذا كانت غير متطابقة أكمل الـ Troubleshooting Flow.","لا تفترض أن حالة النظام تمثل بالضرورة الحالة الفعلية عند العميل."],
+ decision:["الحالة الفعلية تختلف عن النظام ← أكمل الـ Troubleshooting Flow بناءً على الحالة الفعلية ونتائج الفحص."],
+ sysq:["⚠️ اسم السيناريو الأصلي غير واضح في التسجيل — يحتاج إلى تأكيد."],
+ script:[{h:"سكريبت",t:"لا يوجد سكريبت مخصص لهذا القسم في المادة."}],
+ mistakes:["تجاهل وصف العميل.","اعتبار حالة النظام هي الحقيقة دائمًا.","إغلاق الشكوى أو تغيير بيانات الحساب."],
+ summary:"اعتمد على الحالة الفعلية عند العميل مع نتائج الفحص، وأكمل الـ Flow عند الاختلاف.",
+ confirm:["اسم السيناريو الأصلي لاختلاف حالة اللمبات"]},
 
-        <!-- Footer -->
-        <footer>
-            جميع الحقوق محفوظة &copy; تم عمله بواسطه "GARHII" | مخصص للتدريب والتأهيل العملي
-        </footer>
-    </div>
+{id:"s8",ar:"تعويض Zero 15 (3 جيجابايت لمدة يومين)",en:"Zero 15",
+ problem:"الإنترنت شغال لكن الخدمة متأثرة بالحرارة أو السرعة، مع وجود تصعيد للحالة. ذُكر شرط اشتراك العميل في خدمتين وشرط الـ 24 ساعة، وصياغتهما غير واضحة.",
+ when:"عند تأثر الخدمة وبعد التأكد من شروط الاستحقاق.",
+ signs:["الإنترنت شغال لكن الخدمة متأثرة بالحرارة أو السرعة."],
+ steps:["تأكد من المشكلة الفعلية.","راجع نتيجة الفحص.","تأكد من شروط استحقاق التعويض.","راجع الباقة.","نفّذ الإجراء المعتمد.","أبلغ العميل بالتفاصيل الصحيحة بعد تأكيدها."],
+ decision:["شروط الاستحقاق مؤكدة ← نفّذ الإجراء المعتمد وأبلغ العميل.","⚠️ شرط الـ 24 ساعة غير واضح ← ارجع للمرجع الرسمي أو المدرب ولا تخمّن."],
+ sysq:["⚠️ شروط Zero 15 وشرط الخدمتين وشرط الـ 24 ساعة: تحتاج إلى تأكيد."],
+ script:[{h:"سكريبت",t:"لا يوجد سكريبت مخصص في المادة؛ أبلغ العميل بالتفاصيل بعد تأكيدها فقط."}],
+ mistakes:["اعتبار 3 جيجابايت لمدة يومين تعويضًا تلقائيًا.","تغيير خطة العميل دون إذنه.","تخمين معنى شرط الـ 24 ساعة."],
+ summary:"Zero 15 ليس تلقائيًا: تأكد من المشكلة والباقة والشروط أولًا، وما لم يتضح اسأل المدرب.",
+ confirm:["شروط Zero 15 وشرط الـ 24 ساعة"]},
 
-    <!-- Modal Result -->
-    <div class="modal" id="result-modal">
-        <div class="modal-card">
-            <div class="modal-watermark">تم عمله بواسطه "GARHII"</div>
-            <div class="result-badge" id="modal-icon">🏆</div>
-            <h2 class="modal-title" id="modal-headline">أحسنت صنعاً!</h2>
-            <div class="modal-score" id="modal-percentage">0%</div>
-            <p class="modal-desc" id="modal-summary">تفاصيل الأداء</p>
-            <button class="main-btn" style="width: 100%;" onclick="closeModal()">مراجعة الحلول 📝</button>
-        </div>
-    </div>
+{id:"s9",ar:"متابعة الشكاوى",en:"IU Complaints",
+ problem:"متابعة شكوى مفتوحة وتحديد الإجراء حسب عمرها.",
+ when:"عندما يتصل العميل للسؤال عن شكوى سبق فتحها.",
+ signs:["العميل يسأل عن شكوى مفتوحة من قبل."],
+ steps:["راجع وقت فتح الشكوى وحدد هل هي داخل أول 24 ساعة أم تجاوزتها."],
+ decision:["الشكوى داخل أول 24 ساعة ← اعمل Update عليها حسب الإجراء، وأبلغ العميل بمدة 24 ساعة إذا كانت هي المدة المعتمدة للحالة.","الشكوى تجاوزت 24 ساعة ← راجع الحالة الحالية وحدد الإجراء التالي.","⚠️ ذُكرت 72 ساعة لبعض الحالات، والحالات التي ينطبق عليها هذا الـ SLA تحتاج إلى تأكيد."],
+ sysq:["⚠️ متى يكون SLA هو 24 ساعة ومتى 72 ساعة: يحتاج إلى تأكيد."],
+ script:[{h:"سكريبت",t:"لا يوجد سكريبت مخصص لهذا القسم في المادة."}],
+ mistakes:["إنشاء شكوى جديدة تلقائيًا.","إغلاق الشكوى دون مراجعة.","إعطاء العميل مدة عشوائية.","تعميم 72 ساعة على كل شكوى تجاوزت 24 ساعة."],
+ summary:"أول خطوة: عمر الشكوى. داخل 24 ساعة ← Update، وبعدها راجع الحالة والـ SLA المعتمد.",
+ confirm:["متى يكون SLA هو 24 ساعة ومتى 72 ساعة"]},
 
-    <script>
-        const quizData = [{"category": "إجراءات التعاقد والخطوط الجديدة", "question": "في حالة إني قدمت على خط أرضي للعميل من خلالي، ما هي المدة التي أبلغ بها العميل لوصول المعاينة؟", "options": ["بقوله المعاينة هتجيله في خلال الـ 24 ساعة", "في خلال 5 أيام", "خلال أسبوعين عمل", "في نفس اللحظة بدون معاينة"], "answer": 0, "explanation": "المعاينة تتم للعميل خلال 24 ساعة من تسجيل الطلب لفحص الإمكانية الفنية على البوكسة والكبائن."}, {"category": "إجراءات التعاقد والخطوط الجديدة", "question": "ما هي الأوراق الرسمية المطلوبة من العميل للتعاقد على خط أرضي جديد في السنترال؟", "options": ["البطاقة تكون سارية + عقد الإيجار/الملكية + أي إيصال مرافق حديث", "عقد الإيجار + البطاقة فقط بدون إيصال مرافق", "البطاقة الشخصية فقط", "شهادة الميلاد وصورة شخصية حديثة"], "answer": 0, "explanation": "يشترط إحضار بطاقة الرقم القومي سارية + عقد الإيجار أو الملكية + إيصال مرافق حديث (كهرباء/مياه/غاز)."}, {"category": "إجراءات التعاقد والخطوط الجديدة", "question": "عند التقديم على خط أرضي جديد للعميل، ما هي التكاليف والعروض الترويجية الواجب توضيحها بدقة؟", "options": ["مصاريف تركيب الأرضي فقط", "مصاريف الأرضي والإنترنت بدون ذكر أي عروض", "مصاريف الأرضي والإنترنت وبداية من باقة 200 جيجا ليه زيادة 50% على الباقة لمدة 3 شهور وقيمة الراوتر", "قيمة أول اشتراك شهري للإنترنت فقط"], "answer": 2, "explanation": "يجب على الموظف الشفافية الكاملة بتوضيح رسوم التأسيس، والاشتراك، وعرض الـ 50% الإضافية لمدة 3 شهور لباقات 200GB فأعلى، وسعر الراوتر."}, {"category": "إجراءات التعاقد والخطوط الجديدة", "question": "كم تبلغ قيمة جهاز الراوتر للعميل وفقاً لخيارات السداد المعتمدة؟", "options": ["1710 جنيه كاش، أو 57 جنيه شهرياً قسط لمدة 36 شهر", "1700 جنيه كاش، أو 55 جنيه قسط على 3 سنين", "1500 جنيه كاش، أو 50 جنيه قسط لمدة 24 شهر", "الراوتر يسلم مجاناً بدون أي أقساط"], "answer": 0, "explanation": "قيمة الراوتر 1710 جنيهاً في حالة الدفع الكاش، أو تقسيط 57 جنيهاً شهرياً على مدار 36 شهراً."}, {"category": "خطوات التجديد المبكر (Early Renew Steps)", "question": "أثناء مكالمة التجديد المبكر، ما هي المعلومة التوعوية الإلزامية التي يجب إبلاغ العميل بها؟", "options": ["إبلاغه بضرورة الاتصال بخدمة العملاء كل شهر للتجديد", "إبلاغه بأنه يستطيع التجديد بنفسه عبر القنوات الرقمية (Mobile App / Ecare / IVR) لو لم يسبق له استخدامها", "إبلاغه بأن سرعة الباقة ستنخفض للنصف بعد التجديد", "طلب التوجه للسنترال لتسجيل رغبته في التجديد"], "answer": 1, "explanation": "طبقاً لتعليمات OJT، ضروري إبلاغ العميل بإمكانية استخدام قنوات الخدمة الذاتية (IVR / Mobile App / Ecare) في المرات القادمة مع فحص آخر 5 طلبات له."}, {"category": "خطوات التجديد المبكر (Early Renew Steps)", "question": "إذا كان العميل يتصل من نفس رقم الخط الأرضي الخاص بالاشتراك، فما هي قاعدة التحقق (Verification)؟", "options": ["يجب عمل Full Verification بسؤاله عن الرقم القومي بالكامل", "مش هتعمل معاه Verification نهائياً لثبوت الاتصال من نفس الخط الأرضي", "طلب تاريخ ميلاد صاحب الخط", "إرسال رمز OTP لرقم الموبايل المسجل"], "answer": 1, "explanation": "إذا كان الاتصال وارداً من نفس رقم الخط الأرضي للخدمة (Calling from same fixed line)، يتم تخطي الـ Verification مباشرة."}, {"category": "خطوات التجديد المبكر (Early Renew Steps)", "question": "إذا كان العميل يتصل من نفس رقم الموبايل المسجل في الـ Subscriber على الـ BSS، ففي أي المعاملات يتم استثناؤه من الـ Verification؟", "options": ["في جميع المعاملات وتغيير ملكية الخط", "في طلب التجديد المبكر (Early Renewal) فقط", "في طلبات إلغاء الخط والتحويل لشركات أخرى", "لا يتم استثناؤه في أي طلب"], "answer": 1, "explanation": "الاتصال من الموبايل المسجل على BSS يعفي العميل من التحقق في طلب الـ Early Renewal فقط."}, {"category": "خطوات التجديد المبكر (Early Renew Steps)", "question": "إذا اتصل العميل من رقم موبايل مختلف وطلب تجديد مبكر، ما هي أول خطوة معتمدة في الـ Verification؟", "options": ["سؤاله عن الرقم التأميني ومحل السكن بالتفصيل", "سؤاله عن تاريخ آخر عملية شحن (اليوم)", "طلب صورة البطاقة عبر الواتساب", "تحويل المكالمة للفرع فوراً"], "answer": 1, "explanation": "أول خطوة في التحقق لطلب التجديد المبكر هي سؤاله عن تاريخ آخر شحن (اليوم)، وإذا لم يتذكر يتم سؤاله عن آخر 3 أرقام من الموبايل المسجل + الاسم ثنائي."}, {"category": "خطوات التجديد المبكر (Early Renew Steps)", "question": "على نظام BSS، ما هو الخيار المتبع لتنفيذ التجديد المبكر لحساب العميل؟", "options": ["الدخول على تبويب Customer ثم Delete Account", "الدخول على تبويب Subscriber ثم الضغط على زر Change Offering(Fixed)", "الضغط على زر Suspend and Bar(Fixed)", "فتح تذكرة عطل Trouble Ticket للموزع"], "answer": 1, "explanation": "يتم الدخول على صفحة العميل، واختيار زر Change Offering(Fixed) من تحت بيانات الاشتراك وتحديد الباقة وتطبيق Effective Mode: Immediately."}, {"category": "خطوات التجديد المبكر (Early Renew Steps)", "question": "ما هي الـ SR الأكثر استخداماً بنسبة تتجاوز 85% إلى 90% عند التجديد المبكر لعميل يتصل من رقم مختلف؟", "options": ["FBB Non-Tech Request -> Billing -> Early renewal Done - Last Recharge Verification", "FBB Non-Tech Inquiry -> Billing -> Early renewal", "Fixed Voice Complaint -> check availability", "Logical Cases -> Port Down TT"], "answer": 0, "explanation": "هذه الـ SR هي الأكثر شيوعاً بنسبة تتعدى 90%؛ لأن الموظف يسأل العميل عن ميعاد الشحن ويقوم بالتجديد فوراً عند التحقق."}, {"category": "خطوات التجديد المبكر (Early Renew Steps)", "question": "ما الـ SR المعتمدة إذا قام العميل بالتجديد الذاتي (Self-service) ولم ترجع السرعة إلا بعد تواصله معنا وعمل Restart Port؟", "options": ["FBB Non-Tech Complaint -> Billing -> Early renewal done by CST - after restart port", "FBB Non-Tech Inquiry -> Billing -> Early renewal Follow Up", "FBB Non-Tech Request -> Billing -> Early renewal - Not Done not Verified", "Fixed Voice SR follow up -> Check Availability"], "answer": 0, "explanation": "تُسجل كشكوى عدم استعادة السرعة تلقائياً بعد التجديد الذاتي: Early renewal done by CST - after restart port."}, {"category": "خطوات التجديد المبكر (Early Renew Steps)", "question": "إذا طلب العميل تجديد مبكر واشتكى أثناء المكالمة من تكرار انتهاء الباقة سريعاً بسبب الاستهلاك العالي، فما هو تصنيف الـ SR؟", "options": ["FBB Non-Technical Complaint -> Billing -> Early renewal Done", "FBB Non-Tech Inquiry -> Billing -> Early renewal Done", "FBB Non-Tech Request -> Billing -> Early renewal Done - Full Verification", "Outage Alert -> Core Down"], "answer": 0, "explanation": "تسجل تحت بند شكوى غير فنية (Complaint) بسبب إبداء العميل عدم الرضاء عن سرعة نفاد الباقة واستهلاكه العالي."}, {"category": "إتاحة الخط الأرضي والمعاينة (Check Availability)", "question": "ما هو المسار الصحيح على شاشة BSS للبدء في فحص وتقديم طلب إتاحة خط أرضي جديد؟", "options": ["Sitemap -> Integrated Operations (New) -> Check Availability(PSTN)", "Sitemap -> Accounts Receivable -> Voucher Recharge", "Sitemap -> Debt Collection -> Shared Group", "Customer 360 -> Wi-Fi Diagnostic Tab"], "answer": 0, "explanation": "المسار المعتمد لطلب الإتاحة هو Integrated Operations (New) ثم اختيار Check Availability(PSTN)."}, {"category": "إتاحة الخط الأرضي والمعاينة (Check Availability)", "question": "بعد كتابة الرقم القومي للعميل في شاشة طلب الإتاحة، ما الخطوة الإلزامية قبل إدخال العنوان والمكان؟", "options": ["الضغط فوراً على Check Out", "الضغط على زر Verify ثم زر Search للتحقق من هوية وحسابات العميل", "إغلاق الشاشة وإعادة فتحها", "تحويل الطلب لمشرف السنترال"], "answer": 1, "explanation": "من أساسيات OJT الضغط أولاً على Verify & Search لمطابقة الرقم القومي قبل استكمال إدخال العنوان وباقي الحقول."}, {"category": "إتاحة الخط الأرضي والمعاينة (Check Availability)", "question": "في شاشة Availability Request، متى يجب على الموظف تفعيل علامة الصح على اختيار (Voice&Data)؟", "options": ["إذا كان العميل يرغب في خط أرضي صوتي فقط", "إذا كان العميل يشترك على خط أرضي وإنترنت منزلي معاً", "في جميع الطلبات إجبارياً بدون استثناء", "فقط عند ترقية سرعة خط قديم"], "answer": 1, "explanation": "يتم وضع علامة على Voice&Data لو العميل سيشترك أرضي ونت، لكن لو هيقدم على أرضي صوتي بس لا يتم التحديد."}, {"category": "إتاحة الخط الأرضي والمعاينة (Check Availability)", "question": "إذا كان للعميل جار بنفس المبنى ولديه خط أرضي يعمل، فكيف يتم إدخاله في شاشة الإتاحة؟", "options": ["اختيار By In-Building Phone No. وكتابة كود المحافظة بدون الصفر ثم رقم الخط الأرضي", "كتابة رقم موبايل الجار الشخصي", "اختيار By Cabinet No وكتابة اسم الحي", "لا يمكن الاستعانة بخط الجار في النظام"], "answer": 0, "explanation": "نختار By In-Building Phone No. ونكتب كود المحافظة بدون الـ 0 متبوعاً برقم الهاتف الأرضي ثم Get Line Type."}, {"category": "إتاحة الخط الأرضي والمعاينة (Check Availability)", "question": "ما هو الإجراء والاسكريبت إذا كانت النتيجة الفورية للطلب على النظام (Not Available)؟", "options": ["إبلاغ العميل برفض الطلب نهائياً وإلغائه", "إبلاغ العميل بأنه سيتم عمل معاينة لطلبه والرد عليه خلال 24 ساعة للتأكد من الإمكانية الفنية", "طلب التوجه للسنترال فوراً لشراء سلك", "تحويل العميل لشكاوى الجهاز القومي للاتصالات"], "answer": 1, "explanation": "إذا ظهرت Not Available نقول للعميل: 'هيتم عمل معاينة على طلب حضرتك وهيتم الرد عليك في خلال 24 ساعة للتأكد من الإمكانية الفنية'."}, {"category": "إتاحة الخط الأرضي والمعاينة (Check Availability)", "question": "ما هو الاسكريبت والمهلة المحددة للعميل إذا أظهر النظام أن النتيجة (Available)؟", "options": ["إبلاغه بوجود إمكانية فنية وضرورة التوجه للسنترال خلال 14 يوماً مع إعطائه رقم السيريال", "إبلاغه بأن الفني سيصل للمنزل بعد ساعتين", "إبلاغه بدفع الاشتراك أونلاين فقط خلال 24 ساعة", "توجيهه للانتظار لمدة شهر"], "answer": 0, "explanation": "نبلغه بوجود إمكانية فنية وضرورة التوجه للسنترال خلال 14 يوماً لاستكمال الإجراءات، مع إعطائه رقم السيريال وتسجيل SR."}, {"category": "إتاحة الخط الأرضي والمعاينة (Check Availability)", "question": "عند متابعة طلب إتاحة ووجد الموظف أن حالة المعاينة (Survey Status) هي (Survey Started)، فما الخطوة التالية؟", "options": ["إلغاء الطلب فوراً", "الضغط على View والدخول على Order Query برقم Survey Order ID وتفعيل Including History لمعرفة العطل", "إبلاغ العميل بأن الخط تم تركيبه بالفعل", "إعادة تقديم طلب جديد من البداية"], "answer": 1, "explanation": "نضغط View ونأخذ Survey Order ID ونبحث به في Order Query مع تفعيل Including History لفحص الـ Activity Info وسبب الخطأ."}, {"category": "إتاحة الخط الأرضي والمعاينة (Check Availability)", "question": "إذا أظهرت تفاصيل الطلب في Order Query رمز الخطأ (700: Not Available - Need Box)، فكيف يتم التعامل مع العميل؟", "options": ["إبلاغه بأن طلبه غير متاح حالياً وسيتم التواصل معه بمجرد توافر الإمكانية (دون تحديد وقت محدد)", "إبلاغه أن البوكسة ستصل غداً في تمام العاشرة صباحاً", "طلب شراء بوكسة على حسابه الخاص", "إغلاق المكالمة دون توضيح"], "answer": 0, "explanation": "في حالات Need Box أو Need Planning Port نبلغ العميل أن الطلب غير متاح حالياً وسيتم إبلاغه عند توافر الإمكانية دون وعد بموعد محدد."}, {"category": "إتاحة الخط الأرضي والمعاينة (Check Availability)", "question": "إذا انتهت المعاينة بنتيجة (Finished & Not Available)، فما هي المعلومة الرسمية الواجب إبلاغ العميل بها؟", "options": ["أن الطلب ملغي ولن يتم قبوله أبداً", "أن مفيش إمكانية حالياً وأن طلبه المقدم سيظل متاحاً على قوائم الانتظار لمدة سنتين دون ذكر أسباب فنية للرفض", "توضيح التفاصيل الهندسية للكبائن والأسلاك وعدد البورتات الشاغرة", "توجيهه لمقر الوزارة"], "answer": 1, "explanation": "نبلغ العميل أن مفيش إمكانية حالياً وأن الطلب متاح لمدة سنتين، مع منع توضيح الأسباب الفنية للرفض (مثل نقص الكبائن أو البورتات)."}, {"category": "إتاحة الخط الأرضي والمعاينة (Check Availability)", "question": "إذا ظهرت حالة الطلب (Expired & Available) لتأخر العميل أكثر من 14 يوماً عن استكمال التعاقد، فما الإجراء الصحيح؟", "options": ["رفض التعامل مع العميل نهائياً", "عمل Modify للطلب واختيار (Customer Request) ثم Check Out لإعادة تفعيل السيريال لعمل معاينة جديدة", "فتح تذكرة عطل فيزيائي", "إعطاء العميل رقم خط عشوائي"], "answer": 1, "explanation": "يتم عمل تعديل Modify واختيار سبب Customer Request ثم Checkout لإعادة تنشيط السيريال وعمل معاينة جديدة."}, {"category": "إتاحة الخط الأرضي والمعاينة (Check Availability)", "question": "ما هو تصنيف الـ SR المعتمد عند قيام الموظف بتقديم طلب إتاحة جديد للعميل بنجاح أثناء المكالمة؟", "options": ["Fixed Voice Request -> Check availability -> Action Done", "Fixed voice SR follow up -> Check Availability -> Violated SLA", "Fixed Voice SR Complaint -> check availability -> Not Available", "FBB Non-Tech Inquiry -> Early renewal"], "answer": 0, "explanation": "يتم تسجيل الـ SR كطلب تم تنفيذه بالكامل: Fixed Voice Request -> Check availability -> Action Done."}, {"category": "إتاحة الخط الأرضي والمعاينة (Check Availability)", "question": "إذا كان العميل يتابع حالة طلب الإتاحة وما زال الطلب داخل مهلة الـ 24 ساعة المحددة، فما هو تصنيف الـ SR؟", "options": ["Fixed voice SR follow up -> Check Availability -> Within SLA", "Fixed voice SR follow up -> Check Availability -> Violated SLA", "Fixed Voice Request -> Check availability -> Cancel check availability", "Logical Cases -> Authentication Error"], "answer": 0, "explanation": "بما أن الطلب داخل مهلة الـ 24 ساعة، يسجل متابعة ضمن المهلة: Check Availability -> Within SLA."}, {"category": "أنظمة خدمة العملاء (Customer 360 & HDM)", "question": "عند البحث عن حساب العميل على نظام (Customer 360)، ما هي الطريقة الأسرع والأكثر دقة للوصول للحساب؟", "options": ["البحث برقم الهاتف الأرضي مسبوقاً بكود المحافظة (مثل 02XXXXXXXX)", "البحث بالاسم الأول للعميل فقط", "البحث برقم الموديل الخاص بالراوتر", "البحث باسم الشارع بدون رقم العقار"], "answer": 0, "explanation": "البحث برقم الخدمة الأرضي مسبوقاً بكود المحافظة يوصل مباشرة لملف العميل الفريد ويمنع الخلط بين الحسابات."}, {"category": "أنظمة خدمة العملاء (Customer 360 & HDM)", "question": "ما هي الوظيفة الفنية الأساسية لنظام (HDM - Home Device Manager) لموظف الدعم؟", "options": ["تحصيل الفواتير والاشتراكات النقدية", "قراءة كفاءة الخط (SNR Margin / Line Attenuation)، ومعرفة الأجهزة المتصلة، وتعديل إعدادات الـ Wi-Fi عن بُعد", "حجز مواعيد المقابلات الشخصية للمهندسين", "تسجيل المكالمات الصوتية الواردة"], "answer": 1, "explanation": "نظام HDM يدير الراوتر عن بُعد عبر بروتوكول TR-069 لقراءة قياسات الخط وتعديل اسم وكلمة سر الواي فاي."}, {"category": "أنظمة خدمة العملاء (Customer 360 & HDM)", "question": "على نظام (HDM)، إذا كانت قراءة (SNR Margin) للـ Downstream أقل من 6 dB، فهذا يدل على:", "options": ["جودة خط ممتازة واستقرار تام للإشارة", "وجود تشويش عالي جداً على الخط يؤدي إلى عدم استقرار الخدمة وتكرار التقطيع", "أن الراوتر غير متصل بمصدر الكهرباء", "أن الباقة الشهرية قد استهلكت بالكامل"], "answer": 1, "explanation": "قيمة SNR Margin تحت 6 dB تدل على خط حرج جداً (Poor Margin) ويعاني من تقطيع مستمر في التزامن (Line Drops)."}, {"category": "أنظمة خدمة العملاء (Customer 360 & HDM)", "question": "إذا كانت لمبة الـ DSL بالراوتر مطفأة تماماً أو في حالة وميض مستمر (Blinking)، فما هو التشخيص الأولي؟", "options": ["خطأ في إدخال بيانات الـ WAN والـ PPPoE", "عدم وصول إشارة فيزيائية مستقرة، ويجب مراجعة التوصيلات والسلك والاسبليتر (Physical Connection)", "انتهاء رصيد الباقة الشهرية", "تلف في متصفح الإنترنت الخاص بجهاز العميل"], "answer": 1, "explanation": "وميض أو انطفاء لمبة الـ DSL يعني غياب الإشارة الكهربائية التزامنية، مما يشير لخلل فيزيائي في الأسلاك أو الاسبليتر أو البورت."}, {"category": "أنظمة خدمة العملاء (Customer 360 & HDM)", "question": "إذا كانت لمبة الـ DSL ثابتة بينما لمبة الـ Internet تضيء باللون الأحمر، فما الخطوة الصحيحة؟", "options": ["التأكد من صحة إدخال اسم المستخدم وكلمة المرور (WAN Configuration / PPPoE Credentials) في الراوتر", "تغيير سلك التليفون الواصل من الشارع فوراً", "إبلاغ العميل بضرورة شراء جهاز راوتر جديد", "فحص حرارة التليفون الأرضي بالسماعة فقط"], "answer": 0, "explanation": "ثبات DSL مع احمرار Internet يعني نجاح الربط الفيزيائي ولكن فشل التحقق في السيرفر (Authentication Failure)."}, {"category": "إدارة تذاكر الأعطال والشبكة (TTS & Network)", "question": "ما هو التوقيت الصحيح لفتح تذكرة عطل فني (Trouble Ticket - TT) على نظام الـ TTS؟", "options": ["في بداية المكالمة لتقليل وقت معالجة المكالمة (AHT)", "بعد استنفاد كافة خطوات استكشاف الأعطال الأساسية (Troubleshooting) والتأكد من وجود عطل يتطلب تدخل المستوى الأعلى", "بمجرد طلب العميل التحدث مع المشرف", "عند تأخر العميل عن سداد الفاتورة"], "answer": 1, "explanation": "يجب استنفاد الـ Troubleshooting أولاً لتجنب التذاكر المرتجعة (Bounced Tickets) وتخفيف العبء على الصيانة الميدانية."}, {"category": "إدارة تذاكر الأعطال والشبكة (TTS & Network)", "question": "في نظام الـ TTS، إذا كان العطل ناتجاً عن كسر كابل رئيسي بالسنترال (Major Outage)، فما الإجراء الصحيح؟", "options": ["فتح تذكرة فردية عاجلة لكل متصل", "ربط خط العميل بالتذكرة الرئيسية للعطل العام (Child to Parent Ticket) وإبلاغه بالوقت المتوقع دون فتح تذكرة مستقلة", "عمل إعادة ضبط مصنع لراوتر العميل", "تحويل المكالمة لقسم المبيعات"], "answer": 1, "explanation": "في حالات العطل العام (Outage) يتم ربط المشتركين بالعطل المجمع لإبلاغهم بالـ SLA الموحد دون إغراق النظام بتذاكر فردية."}, {"category": "إدارة تذاكر الأعطال والشبكة (TTS & Network)", "question": "ماذا تعني حالة التذكرة (Pending Customer) داخل نظام الـ TTS؟", "options": ["التذكرة أغلقت بنجاح وتم حل المشكلة", "التذكرة معلقة مؤقتاً في انتظار رد أو إجراء مطلوب من العميل (مثل تجربة جهاز بديل أو الرد على اتصال الفني)", "التذكرة في انتظار السداد المالي", "سيرفر التذاكر متوقف عن العمل"], "answer": 1, "explanation": "توضع حالة Pending Customer لإيقاف عداد الـ SLA مؤقتاً حتى يتجاوب العميل مع تعليمات الفريق التقني."}, {"category": "إدارة تذاكر الأعطال والشبكة (TTS & Network)", "question": "ماذا يعني ظهور رسالة (Access-Reject / Bad Authentication) على سجلات خادم الـ Radius؟", "options": ["وجود قطع في كابل التليفون بالشارع", "بيانات الدخول للخدمة (PPPoE Username / Password) المدخلة بالراوتر غير صحيحة", "حرارة الخط الأرضي معطلة بالكامل", "الراوتر متصل بنجاح بالإنترنت"], "answer": 1, "explanation": "خادم المصادقة Radius يرفض الطلب (Access-Reject) عند عدم تطابق بيانات اسم المستخدم أو كلمة السر مع قاعدة البيانات."}, {"category": "إدارة تذاكر الأعطال والشبكة (TTS & Network)", "question": "إذا أظهر نظام الـ Radius أن حالة العميل (Active Session) بينما الراوتر مغلق تماماً ولمبة الإنترنت مطفأة، فما التشخيص؟", "options": ["اختراق الحساب من شبكة خارجية", "وجود جلسة معلقة (Stuck Session) ويجب تنفيذ أمر إنهاء الجلسة (Kill/Disconnect Session) لإتاحة الاتصال من جديد", "تلف وحدة المعالجة المركزية بالراوتر", "انتهاء باقة التحميل الشهرية"], "answer": 1, "explanation": "الجلسة المعلقة (Stuck/Hanging Session) تمنع الراوتر من الحصول على IP جديد وتتطلب عمل Kill Session من النظام."}, {"category": "إدارة تذاكر الأعطال والشبكة (TTS & Network)", "question": "ما هو الغرض من تنفيذ إجراء (Port Reset / Port Bounce) من خلال نظام إدارة الشبكة (MSAN / U2000)؟", "options": ["تغيير باقة الاشتراك الخاصة بالعميل", "إعادة تشغيل المنفذ في الكابينة لتنشيط الإشارة وإجبار الراوتر والكابينة على إعادة بناء التزامن الفيزيائي", "مسح سجل فواتير العميل", "إلغاء خاصية إظهار رقم المتصل"], "answer": 1, "explanation": "عملية Port Reset تعيد تنشيط دائرة الكارت بالكابينة وتحل مشاكل التهنيج اللحظي للبورت وعدم استقرار الإشارة."}, {"category": "الشير بوينت والفوترة (SharePoint & BSS)", "question": "ما هي الأهمية الأساسية لبوابة الشير بوينت (SharePoint / Intranet) لموظف خدمة العملاء؟", "options": ["تحميل البرامج والألعاب الترفيهية", "الرجوع للمصدر المعتمد والمحدث للأسعار، والعروض الترويجية، ومصفوفة التصعيد (Escalation Matrix)، وسيناريوهات الأعطال", "الاطلاع على الحسابات البنكية للمشتركين", "إرسال رسائل بريد شخصية للعملاء"], "answer": 1, "explanation": "الشير بوينت هو المرجع الرسمي الداخلي (Single Source of Truth) المعتمد للسياسات والأسعار وسيناريوهات العمل."}, {"category": "الشير بوينت والفوترة (SharePoint & BSS)", "question": "ما هي وظيفة 'مصفوفة التصعيد' (Escalation Matrix) المتاحة على الشير بوينت؟", "options": ["جدول لتوزيع الإجازات الأسبوعية", "وثيقة تحدد لكل نوع مشكلة: الإدارة المسؤولة عنها، وقت الاستجابة والحل المحدد (SLA)، ومسار التحويل المعتمد", "حاسبة إلكترونية لحساب قيمة الفاتورة", "دليل لأنواع أجهزة الكمبيوتر المكتبية"], "answer": 1, "explanation": "الـ Escalation Matrix تحدد مسار كل نوع مشكلة بدقة (MDF, NOC, Core, Billing) والوقت المسموح لحلها دون إخلال بالـ SLA."}, {"category": "الشير بوينت والفوترة (SharePoint & BSS)", "question": "إذا اشتكى العميل من تراجع سرعة الإنترنت فجأة إلى (256 Kbps أو 1 Mbps) مع استقرار جميع لمبات الراوتر باللون الأخضر، فما هو الإجراء الأول؟", "options": ["فحص استهلاك الباقة على السيستم والتأكد إن كان العميل في حالة نفاد السعة وتطبيق سياسة الاستخدام العادل (FUP)", "طلب فني للمنزل لتغيير السلك الأرضي فوراً", "عمل إعادة ضبط مصنع للراوتر وإعادة كتابة البيانات", "إبلاغ العميل بوجود عطل عام في السنترال"], "answer": 0, "explanation": "استقرار اللمبات ونزول السرعة للسرعة الخانقة (Throttling) يشير فوراً لاستهلاك كامل الجيجابايتس، ويتم فحص ذلك من الـ Billing/Usage."}, {"category": "الشير بوينت والفوترة (SharePoint & BSS)", "question": "ما الإجراء الصحيح عند ظهور حالة الحساب على نظام BSS كـ (Suspended - Overdue)؟", "options": ["فتح تذكرة عطل فيزيائي في نظام TTS للصيانة الميدانية", "توضيح أن الخدمة معلقة إدارياً لعدم سداد الفاتورة وإرشاد العميل لطرق ومنافذ الدفع المتاحة لتنشيط الخط تلقائياً", "تغيير باقة العميل لباقة مجانية", "عمل إعادة تشغيل للبورت في الكابينة فوراً"], "answer": 1, "explanation": "حالة Overdue Suspended تعني تعليق الحساب لتأخر السداد، وتعود الخدمة تلقائياً للعمل بمجرد سداد الفاتورة عبر منافذ الدفع."}];
+{id:"s10",ar:"شكاوى 360 وAzure Support",en:"360 / Azure Support Complaints",
+ problem:"الشكوى قد تظهر على 360 مع وصف قريب من Azure Support / In Progress، والاسم الدقيق يحتاج إلى تأكيد.",
+ when:"عندما تكون الشكوى بالفعل مع القسم المختص، أو في حالة TTS.",
+ signs:["الشكوى تظهر على 360 كأنها مع القسم المختص (In Progress)."],
+ steps:["راجع حالة الشكوى على 360.","وضّح للعميل أن الشكوى مع القسم المختص وجاري العمل عليها، وأعطه المدة المعتمدة.","إذا لم يقبل العميل الانتظار تابع المشكلة الأصلية حسب الـ Flow."],
+ decision:["الشكوى مع القسم المختص ← وضح الحالة والـ SLA المعتمد.","العميل لا يقبل الانتظار ← تابع المشكلة الأصلية حسب الـ Flow.","⚠️ حالة TTS: إجراء غير واضح ومدة تواصل 15 دقيقة — لا تعتمد المدة قبل تأكيد نوع الحالة والـ SLA."],
+ sysq:["⚠️ الاسم الدقيق لحالة Azure Support / In Progress: يحتاج إلى تأكيد.","⚠️ اسم حالة TTS: يحتاج إلى تأكيد."],
+ script:[{h:"الشكوى مع القسم المختص",t:"«أستاذ [الاسم]، الشكوى الخاصة بحضرتك موجودة بالفعل مع القسم المختص، وجاري العمل عليها. المدة المحددة للمتابعة هي [SLA المعتمد].»"}],
+ mistakes:["التأكيد أنها اتحلت دون تحقق.","طلب إنشاء شكاوى مكررة.","اختراع اسم لحالة غير واضحة.","اعتماد مدة 15 دقيقة قبل التأكد."],
+ summary:"وضّح حالة الشكوى والـ SLA المعتمد، وتابع المشكلة الأصلية إن رفض العميل الانتظار.",
+ confirm:["اسم حالة TTS التي ذكر فيها المدرب مدة 15 دقيقة","الاسم الدقيق لحالة Azure Support"]},
 
-        let userAnswers = {}; // { qIndex: { chosen: number, isCorrect: boolean } }
-        let currentFilter = 'all';
+{id:"s11",ar:"تسريع المتابعة",en:"IR Acceleration",
+ problem:"طلب تسريع متابعة المشكلة إذا كانت الحالة تستدعي ذلك وفقًا للـ Flow.",
+ when:"عندما تستوفي الحالة شروط طلب التسريع المعتمد (الشروط تحتاج إلى تأكيد).",
+ signs:["العميل يحتاج الخدمة بشكل عاجل بسبب الشغل أو الدراسة."],
+ steps:["راجع إمكانية تقديم طلب تسريع حسب الإجراء المتاح.","سجّل في الطلب مدى احتياج العميل للخدمة.","بعد إنشاء الطلب بالفعل وضّح رقم الطلب وحالته."],
+ decision:["الحالة تستوفي شروط التسريع ← قدّم طلب التسريع وسجل الاحتياج.","⚠️ شروط IR Acceleration غير موضحة في المادة — تحتاج إلى تأكيد."],
+ sysq:["⚠️ شروط IR Acceleration: تحتاج إلى تأكيد."],
+ script:[{h:"سكريبت",t:"«أنا مقدر إن حضرتك محتاج الخدمة بشكل عاجل بسبب الشغل أو الدراسة. هراجع إمكانية تقديم طلب تسريع للمتابعة حسب الإجراء المتاح عندي، وهسجل فيه مدى احتياج حضرتك للخدمة.»"}],
+ mistakes:["استخدامه في كل مكالمة دون استثناء.","استخدامه بدلًا من الفحص الفني.","ذكر رقم الطلب قبل إنشائه فعلًا."],
+ summary:"التسريع ليس لكل مكالمة؛ يُستخدم عند استيفاء شروطه، وبعد الإنشاء وضح رقم الطلب وحالته.",
+ confirm:["شروط IR Acceleration"]},
 
-        function initApp() {
-            document.getElementById('stat-total').innerText = quizData.length;
-            renderCategories();
-            renderQuestions();
-            updateStats();
-        }
+{id:"s12",ar:"إعادة العمل على الشكاوى المتكررة",en:"IR Rework",
+ problem:"العميل لديه شكاوى متكررة لنفس المشكلة.",
+ when:"عندما تلاحظ تكرار نفس الشكوى أكثر من مرة.",
+ signs:["العميل واجه المشكلة أكثر من مرة."],
+ steps:["راجع الشكاوى السابقة.","تأكد من الإجراء المتاح لمتابعة المشكلة بشكل أدق.","اتبع شروط IR Rework المعتمدة."],
+ decision:["شكاوى متكررة ← راجع السابق ثم اتبع شروط IR Rework المعتمدة.","⚠️ شروط IR Rework تحتاج إلى تأكيد."],
+ sysq:["⚠️ شروط IR Rework: تحتاج إلى تأكيد."],
+ script:[{h:"سكريبت",t:"«يا أستاذ [الاسم]، أنا لاحظت إن حضرتك واجهت المشكلة دي أكتر من مرة، وده شيء يهمنا نراجعه كويس. هراجع الشكاوى السابقة وأتأكد من الإجراء المتاح لمتابعة المشكلة بشكل أدق.»"}],
+ mistakes:["تجاهل المشكلة الحالية.","إلغاء الشكاوى القديمة.","منح تعويض دون شروط."],
+ summary:"راجع الشكاوى السابقة لفهم التكرار وحدد الإجراء المناسب وفق شروط IR Rework.",
+ confirm:["شروط IR Rework"]},
 
-        function renderCategories() {
-            const categories = ['all', ...new Set(quizData.map(q => q.category))];
-            const filterContainer = document.getElementById('category-filters');
-            filterContainer.innerHTML = '';
+{id:"s13",ar:"تأخر المتابعة وإعادة إسناد الطلبات",en:"IR Delay / Reassign Tickets",
+ problem:"تأخر متابعة المشكلة أو الحاجة إلى إعادة إسناد الطلب.",
+ when:"عندما يشتكي العميل من التأخر، وبعد مراجعة حالة الطلب.",
+ signs:["العميل كان يتوقع حل المشكلة في وقت أسرع."],
+ steps:["راجع حالة الطلب الحالي.","إذا استدعت الحالة تصعيدًا أو إعادة إسناد اتبع الإجراء المعتمد لتتم المتابعة من الفريق المختص."],
+ decision:["الطلب متأخر ← راجع شروط التصعيد أو إعادة الإسناد ونفّذ المعتمد.","⚠️ شروط IR Delay تحتاج إلى تأكيد."],
+ sysq:["⚠️ شروط IR Delay: تحتاج إلى تأكيد."],
+ script:[{h:"سكريبت",t:"«أنا مقدر إن حضرتك كنت متوقع حل المشكلة في وقت أسرع. هراجع حالة الطلب الحالي، ولو الحالة تستدعي تصعيدًا أو إعادة إسناد، هتبع الإجراء المعتمد علشان تتم متابعتها من الفريق المختص.»"}],
+ mistakes:["إنشاء طلبات مكررة دائمًا.","وعد العميل بحل فوري.","تجاهل تاريخ الشكوى."],
+ summary:"عند التأخر راجع حالة الطلب وشروط التصعيد/إعادة الإسناد ثم اتبع المعتمد.",
+ confirm:["شروط IR Delay"]},
 
-            categories.forEach(cat => {
-                const btn = document.createElement('button');
-                btn.className = `filter-btn ${cat === currentFilter ? 'active' : ''}`;
-                btn.innerText = cat === 'all' ? `جميع الأسئلة (${quizData.length})` : cat;
-                btn.onclick = () => {
-                    currentFilter = cat;
-                    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-                    btn.classList.add('active');
-                    renderQuestions();
-                };
-                filterContainer.appendChild(btn);
-            });
-        }
+{id:"s14",ar:"العطل الجسيم والانقطاع",en:"Major Fault / Outage",
+ problem:"Major Fault عطل جسيم يؤثر على مجموعة من الخطوط ويتطلب تدخل فرق الصيانة. Outage عطل فني في المنطقة يؤثر على مجموعة من الخطوط.",
+ when:"عندما تدعم بيانات النظام وجود Major Fault أو Outage يؤثر على خط العميل.",
+ signs:["الفحص يوضح تأثر الخط بعطل في الشبكة أو في المنطقة."],
+ steps:["راجع بيانات النظام لتأكيد الحالة.","اذكر للعميل رقم الطلب والمدة المعتمدة للمتابعة.","الفريق المختص يتابع الحالة."],
+ decision:["بيانات النظام تؤكد Major Fault ← استخدم سكريبت Major Fault.","بيانات النظام تؤكد Outage ← استخدم سكريبت Outage.","لا تصف الحالة بذلك بالتخمين."],
+ sysq:["لا توجد اختيارات نظام مذكورة بوضوح في هذا القسم."],
+ script:[
+  {h:"Major Fault",t:"«أستاذ [الاسم]، بعد مراجعة الحالة، واضح إن خط حضرتك متأثر بعطل جسيم في الشبكة، وده محتاج تدخل فرق الصيانة المختصة. رقم الطلب هو [رقم التذكرة]، والمدة المحددة للمتابعة هي [SLA].»"},
+  {h:"Outage",t:"«أستاذ [الاسم]، الفحص بيوضح إن فيه عطل فني في المنطقة مأثر على مجموعة من الخطوط، ومن ضمنها خط حضرتك. الفريق المختص بيتابع الحالة، وده رقم الطلب [رقم التذكرة]، والمدة المحددة للمتابعة [SLA].»"}],
+ mistakes:["وصف الحالة بـ Outage بالتخمين.","وصف أي شكوى بطء بأنها Outage.","إعطاء معلومات غير مؤكدة عن موعد الحل.","ذكر بيانات عميل آخر."],
+ summary:"لا تقل Outage أو Major Fault إلا إذا دعمته بيانات النظام، واذكر رقم الطلب والمدة المعتمدة.",
+ confirm:[]},
 
-        function renderQuestions() {
-            const list = document.getElementById('questions-list');
-            list.innerHTML = '';
+{id:"s15",ar:"باقة بيانات موبايل كتعويض",en:"WE Mobile Concession",
+ problem:"مراجعة إمكانية توفير بيانات موبايل للعميل المستحق لمساعدته أثناء تأثر الخدمة الأرضية.",
+ when:"عندما تكون الحالة مستحقة للتعويض وفق السياسة المعتمدة.",
+ signs:["الخدمة الأرضية متأثرة والعميل يحتاج البقاء متصلًا."],
+ steps:["تحقق من الاستحقاق.","تأكد من رقم الموبايل.","راجع حجم الباقة ومدتها.","وضّح الشروط للعميل."],
+ decision:["العميل مستحق ← اتبع الخطوات الأربع.","⚠️ شروط استخدام Mobile Concession تحتاج إلى تأكيد."],
+ sysq:["⚠️ شروط Mobile Concession: تحتاج إلى تأكيد."],
+ script:[{h:"سكريبت",t:"«الشركة يهمها إن حضرتك تقدر تفضل متصل بالإنترنت قدر الإمكان أثناء تأثر الخدمة الأرضية. لو الحالة مستحقة للتعويض، نقدر نراجع إمكانية توفير باقة بيانات على رقم 015 وفقًا للسياسة المعتمدة.»"}],
+ mistakes:["منح التعويض لكل العملاء تلقائيًا.","عدم التأكد من رقم الموبايل.","عدم توضيح الشروط."],
+ summary:"استحقاق ← رقم الموبايل ← حجم الباقة ومدتها ← توضيح الشروط.",
+ confirm:["شروط استخدام Mobile Concession"]},
 
-            quizData.forEach((q, idx) => {
-                if (currentFilter !== 'all' && q.category !== currentFilter) {
-                    return;
-                }
+{id:"s16",ar:"تجديد الباقة",en:"Package Renewal",
+ problem:"تجديد باقة العميل والتأكد من نجاح التجديد وعودة الخدمة.",
+ when:"عندما يحتاج العميل تجديد الباقة.",
+ signs:["الخدمة متوقفة أو العميل يطلب التجديد."],
+ steps:["راجع الحساب والباقة.","نفّذ التجديد حسب الإجراء.","تأكد من نجاح التجديد.","تحقق من حالة الخدمة.","وضّح قنوات التجديد المتاحة للعميل."],
+ decision:["بعد التجديد ← تأكد من نجاحه وتحقق من الخدمة قبل إنهاء المكالمة."],
+ sysq:["الأدوات المذكورة للتجديد: BSS و360."],
+ script:[{h:"قنوات التجديد",t:"«تسهيلًا على حضرتك، تقدر تجدد الباقة مستقبلًا من خلال القنوات المتاحة، زي تطبيق الشركة أو الموقع أو القنوات الصوتية أو الشات بوت، حسب الخدمات المتاحة على حسابك.»"}],
+ mistakes:["إنهاء المكالمة مباشرة بعد التجديد.","تغيير بيانات الحساب.","فتح شكوى فنية تلقائيًا."],
+ summary:"راجع، جدّد، تأكد من النجاح، تحقق من الخدمة، ثم عرّف العميل بقنوات التجديد.",
+ confirm:[]},
 
-                const card = document.createElement('div');
-                card.className = 'q-card';
-                card.id = `q-card-${idx}`;
+{id:"s17",ar:"تنشيط الخط",en:"Port Restart",
+ problem:"إجراء تنشيط للخط من جهة الموظف للمساعدة في حل المشكلة.",
+ when:"عندما يكون الإجراء مناسبًا ومسموحًا وفق الـ Flow والصلاحيات.",
+ signs:["مشكلة تتطلب تنشيط الخط وفق الـ Flow."],
+ steps:["تأكد من ملاءمة الإجراء.","نفّذ Port Restart وفقًا للصلاحيات.","راجع النتيجة.","تحقق من الخدمة مع العميل."],
+ decision:["بعد التنفيذ ← تحقق من النتيجة وحالة الخدمة."],
+ sysq:["لا توجد اختيارات نظام مذكورة بوضوح في هذا القسم."],
+ script:[{h:"سكريبت",t:"«أستاذ [الاسم]، أنا هعمل دلوقتي خطوة تنشيط للخط من عندي، وممكن تساعد في حل المشكلة. بعد تنفيذها هنتحقق من حالة الإنترنت مع حضرتك.»"}],
+ mistakes:["ضمان أن المشكلة لن تتكرر.","تجاهل نتيجة الفحص.","تنفيذه خارج الصلاحيات."],
+ summary:"تأكد من الملاءمة، نفّذ وفق الصلاحيات، راجع النتيجة، وتحقق من الخدمة.",
+ confirm:[]},
 
-                const state = userAnswers[idx];
+{id:"s18",ar:"الأدوات حسب الحالة",en:"Tools",
+ problem:"معرفة الأدوات المستخدمة لكل نوع Case.",
+ when:"عند اختيار الأدوات لمراجعة حالة فنية أو تجديد أو تغيير إعدادات.",
+ signs:["لا توجد أعراض؛ القسم مرجع للأدوات."],
+ steps:["مشكلة فنية (Logical أو Physical): 360 وBSS وADF وTTS.","تجديد الباقة: BSS و360.","تغيير إعدادات من HDM: 360 لمراجعة بيانات الخط واستخراج Account Number، ثم HDM لتنفيذ الإجراء المطلوب.","حرارة فقط: 360 وBSS وADF."],
+ decision:["حدد نوع الـ Case أولًا ← ثم استخدم الأدوات المذكورة له.","⚠️ ترتيب الاستخدام حسب نوع الـ Case يحتاج إلى تأكيد."],
+ sysq:["⚠️ أسماء الأدوات وترتيب استخدامها: تحتاج إلى تأكيد."],
+ script:[{h:"سكريبت",t:"لا يوجد سكريبت لهذا القسم."}],
+ mistakes:["استخدام أداة غير مذكورة للحالة.","نسيان استخراج Account Number من 360 قبل تنفيذ إجراء HDM."],
+ summary:"فنية: 360/BSS/ADF/TTS. تجديد: BSS/360. HDM: 360 ثم HDM. حرارة: 360/BSS/ADF.",
+ confirm:["تأكيد أسماء الأدوات وترتيب استخدامها حسب نوع الـ Case"]},
 
-                let optionsHtml = '';
-                q.options.forEach((opt, optIdx) => {
-                    let optClass = 'opt-btn';
-                    let icon = '';
+{id:"s19",ar:"إنهاء المكالمة",en:"Call Ending",
+ problem:"إنهاء المكالمة بتوضيح رقم الشكوى والمدة المعتمدة والاعتذار والشكر.",
+ when:"في نهاية المكالمة بعد تسجيل الشكوى أو التصعيد.",
+ signs:["لا توجد أعراض؛ القسم عن الخاتمة."],
+ steps:["أبلغ العميل بتسجيل التفاصيل ورقم الشكوى.","اذكر الـ SLA المعتمد.","اعتذر مرة أخرى وأكد اهتمامك برضا العميل.","اشكره على الاتصال."],
+ decision:["بعد التصعيد ← وضّح رقم الشكوى والـ SLA المعتمد."],
+ sysq:["لا توجد اختيارات نظام في هذا القسم."],
+ script:[
+  {h:"التسجيل والمتابعة",t:"«أستاذ [الاسم]، أنا سجلت تفاصيل المشكلة في الطلب، ورقم الشكوى هو [رقم الشكوى]. المدة المحددة للمتابعة هي [SLA المعتمد]، والفريق المختص هيتابع الحالة وفقًا للإجراء المعتمد.»"},
+  {h:"الخاتمة",t:"«بعتذر لحضرتك مرة تانية عن المشكلة، ويهمنا جدًا رضاك عن الخدمة. لو احتجت أي مساعدة إضافية، أنا وزمايلي موجودين لخدمة حضرتك. شكرًا لاتصالك بـ WE، ونتمنى نسمع صوت حضرتك دايمًا في كل خير.»"}],
+ mistakes:["إنهاء المكالمة دون ذكر رقم الشكوى والمدة.","ذكر معلومات غير مؤكدة.","ذكر بيانات عملاء آخرين."],
+ summary:"رقم الشكوى + الـ SLA المعتمد + اعتذار + شكر.",
+ confirm:[]}
+];
 
-                    if (state) {
-                        if (optIdx === q.answer) {
-                            optClass += ' correct';
-                            icon = '✅';
-                        } else if (state.chosen === optIdx && !state.isCorrect) {
-                            optClass += ' wrong';
-                            icon = '❌';
-                        }
-                    }
+/* ===== الأسئلة: Q(قسم, مستوى, سؤال, [4 اختيارات], index الصحيح, تفسير) ===== */
+var QS=[];
+function Q(sec,lvl,q,o,a,e){QS.push({id:"q"+(QS.length+1),sec:sec,lvl:lvl,q:q,o:o,a:a,e:e});}
 
-                    const disabledAttr = state ? 'disabled' : '';
+Q("s1",3,"ما أفضل تصرف أثناء فتح بيانات العميل على السيستم؟",["الصمت حتى انتهاء جميع الخطوات.","إبلاغ العميل بأنك تراجع حالة الخط، مع الاستمرار في التواصل معه.","إنهاء المكالمة والاتصال لاحقًا.","مطالبة العميل بالاتصال مرة أخرى."],1,"التواصل المستمر يطمئن العميل ويمنع فترات الصمت غير الضرورية.");
+Q("s1",1,"ما الهدف من استخدام Empathy؟",["ضمان حل المشكلة خلال دقائق.","إعفاء العميل من جميع الشروط.","إظهار التفهم والاهتمام مع توضيح الخطوات الواقعية.","إلغاء الحاجة إلى فحص الخط."],2,"التعاطف يُظهر الاهتمام ويوضح خطوات واقعية دون وعود لا يمكن ضمانها.");
 
-                    optionsHtml += `
-                        <button class="${optClass}" ${disabledAttr} onclick="selectAnswer(${idx}, ${optIdx})">
-                            <span>${opt}</span>
-                            <span class="opt-icon">${icon}</span>
-                        </button>
-                    `;
-                });
+Q("s2",3,"إذا كانت اللمبات UP والعميل لا يستطيع تصفح الإنترنت، فما الخطوة المناسبة؟",["تغيير إعدادات الراوتر عشوائيًا.","إغلاق المكالمة.","مراجعة Logs ونتائج الفحص واتباع الـ Flow.","تصعيد جميع الحالات مباشرة دون فحص."],2,"في سيناريو اللمبات UP نراجع الـ Logs ونتيجة الفحص ونتابع مسار الـ Troubleshooting.");
+Q("s2",2,"إذا كانت بيانات الحساب غير صحيحة، فما المبدأ الصحيح؟",["إدخال أي بيانات حتى يعمل الإنترنت.","مراجعة البيانات وتصحيحها بالقيم المعتمدة.","حذف الحساب.","تغيير كلمة مرور العميل دون داعٍ."],1,"التصحيح يكون فقط باستخدام القيم المعتمدة، ثم إعادة التحقق من الاتصال.");
 
-                let feedbackHtml = '';
-                if (state) {
-                    const bgClass = state.isCorrect ? 'success-bg' : 'danger-bg';
-                    const titleText = state.isCorrect ? 'إجابة صحيحة وممتازة!' : 'إجابة خاطئة، الإجابة المعتمدة موضحة بالأعلى باللون الأخضر.';
-                    feedbackHtml = `
-                        <div class="q-feedback show ${bgClass}">
-                            <strong>${titleText}</strong>
-                            <p style="margin-top: 5px; font-weight: 500;">💡 توضيح وإجراء الـ OJT: ${q.explanation}</p>
-                        </div>
-                    `;
-                }
+Q("s3",2,"ما التصرف الصحيح عند عدم حصول الراوتر على IP؟",["تغيير إعدادات غير معروفة.","اتباع مسار الفحص وتحديد نوع الراوتر ونتائج التشخيص.","إغلاق الشكوى فورًا.","ضمان حل المشكلة قبل الفحص."],1,"نتبع الـ Troubleshooting Flow ونحدد نوع الراوتر ونتيجة كل خطوة.");
+Q("s3",1,"لماذا نحتاج إلى تحديد نوع الراوتر؟",["لأن خطوات التشخيص قد تختلف حسب النوع.","لأن جميع أنواع الراوتر لها نفس الإعدادات دائمًا.","لتغيير كلمة مرور العميل تلقائيًا.","لإلغاء خطوات الفحص."],0,"تحديد النوع جزء من مسار الفحص لأن التشخيص قد يختلف حسب النوع.");
 
-                card.innerHTML = `
-                    <div class="q-header">
-                        <span class="q-number">سؤال ${idx + 1}</span>
-                        <span class="q-tag">${q.category}</span>
-                        <span class="q-watermark-stamp">GARHII</span>
-                    </div>
-                    <div class="q-title">${q.question}</div>
-                    <div class="options-list">
-                        ${optionsHtml}
-                    </div>
-                    ${feedbackHtml}
-                `;
+Q("s4",3,"عميل يشتكي من انقطاع متكرر، واللمبات UP. ما الخطوة الأولى؟",["مراجعة مسار Logical Instability ونتائج الفحص.","تغيير بيانات الحساب مباشرة.","إغلاق المكالمة.","افتراض أن الراوتر تالف."],0,"نبدأ بحالة اللمبات واختيار مسار Internet Stability / Instability ومراجعة نتيجة الفحص.");
+Q("s4",2,"لماذا نسأل العميل عن نوع الجهاز المستخدم؟",["لمعرفة هل الجهاز هاتف أم كمبيوتر فقط دون أي فائدة فنية.","لأن خطوات فحص الجهاز وتجربة الاتصال قد تختلف حسب نوعه.","لإلغاء فحص الراوتر.","لضمان أن المشكلة ستُحل."],1,"فحص الجهاز يختلف بين Laptop/Computer وMobile.");
+Q("s4",3,"إذا لم تتكرر المشكلة أثناء فترة المراقبة، فما التصرف الصحيح؟",["ضمان عدم حدوث المشكلة مستقبلًا.","التأكد من استقرار الخدمة وإكمال الإجراء حسب الـ Flow.","حذف جميع سجلات الشكوى.","تغيير إعدادات الراوتر عشوائيًا."],1,"نتحقق من الاستقرار ونكمل وفق الـ Flow دون وعود مضمونة.");
 
-                list.appendChild(card);
-            });
-        }
+Q("s5",1,"ما الهدف من مراجعة Logs خلال آخر 12 ساعة؟",["معرفة تاريخ ميلاد العميل.","مراجعة سجل الحالة وفقًا للـ Flow.","إلغاء فحص التوصيلات.","تغيير بيانات الحساب."],1,"مراجعة الـ Logs جزء من تحديد المسار المناسب في الـ Flow.");
+Q("s5",3,"ما التصرف الصحيح عند استمرار Data Down بعد فحص التوصيلات؟",["ضمان الحل دون فحص إضافي.","إغلاق المكالمة.","استكمال التشخيص والتصعيد حسب المسار المعتمد.","حذف سجل الحالة."],2,"إذا استمرت المشكلة نكمل الفحص والتصعيد حسب المسار المعتمد.");
+Q("s5",1,"ما المدة المتوقعة التي يذكرها سكريبت Clear View للعميل؟",["أقل من دقيقتين.","ساعتان.","24 ساعة.","72 ساعة."],0,"السكريبت يقول إن الفحص متوقع أن ياخد أقل من دقيقتين.");
 
-        function selectAnswer(qIndex, chosenIndex) {
-            if (userAnswers[qIndex]) return;
+Q("s6",1,"ما الذي يحدد الانتقال إلى Logical Instability؟",["تخمين الموظف.","نتيجة الفحص ومسار التشخيص المعتمد.","رغبة الموظف في إنهاء المكالمة.","لون واجهة السيستم."],1,"إذا أشارت نتيجة الفحص إلى Logical Instability ننتقل لمساره.");
+Q("s6",2,"هل يتم منح 3 جيجابايت لكل عميل لديه مشكلة انقطاع؟",["نعم، دائمًا.","لا، يجب التحقق من شروط الاستحقاق.","نعم، دون مراجعة الحساب.","فقط إذا رفض العميل الانتظار."],1,"التعويض ليس تلقائيًا؛ شروط الاستحقاق تحتاج إلى مراجعة.");
 
-            const isCorrect = chosenIndex === quizData[qIndex].answer;
-            userAnswers[qIndex] = {
-                chosen: chosenIndex,
-                isCorrect: isCorrect
-            };
+Q("s7",3,"إذا كانت حالة اللمبات مختلفة بين النظام والعميل، ماذا تفعل؟",["تتجاهل وصف العميل.","تختار المسار المناسب بناءً على الحالة الفعلية ونتائج الفحص.","تغلق الشكوى.","تغير بيانات الحساب."],1,"لا نفترض أن حالة النظام هي الحالة الفعلية عند العميل، ونكمل الـ Flow.");
 
-            updateStats();
-            renderQuestions();
-        }
+Q("s8",2,"ما التصرف الصحيح قبل عرض Zero 15؟",["منح التعويض لكل عميل دون مراجعة.","التأكد من شروط الاستحقاق والباقة والحالة.","إغلاق الشكوى.","تغيير خطة العميل دون إذنه."],1,"نراجع المشكلة والفحص والشروط والباقة قبل تنفيذ الإجراء.");
+Q("s8",2,"إذا كان شرط الـ 24 ساعة غير واضح، ماذا تفعل؟",["تخمين معناه.","تطبيقه على جميع الحالات.","الرجوع إلى المرجع الرسمي أو المدرب لتأكيد الشرط.","تجاهله دائمًا."],2,"لا نخمّن الشروط غير الواضحة؛ نؤكدها من المرجع أو المدرب.");
 
-        function updateStats() {
-            const answeredCount = Object.keys(userAnswers).length;
-            let correctCount = 0;
-            let wrongCount = 0;
+Q("s9",1,"ما أول خطوة عند متابعة شكوى مفتوحة؟",["إنشاء شكوى جديدة تلقائيًا.","مراجعة حالة الشكوى وتاريخ فتحها.","إغلاق الشكوى دون مراجعة.","إعطاء العميل مدة عشوائية."],1,"نحدد عمر الشكوى: داخل أول 24 ساعة أم تجاوزتها.");
+Q("s9",2,"هل كل شكوى تجاوزت 24 ساعة يكون الـ SLA الخاص بها 72 ساعة؟",["نعم دائمًا.","لا، يجب مراجعة نوع الحالة والـ SLA المعتمد.","نعم، دون النظر إلى نوع المشكلة.","يتم تحديد المدة حسب رغبة العميل."],1,"72 ساعة ذُكرت لبعض الحالات فقط، وتحتاج إلى تأكيد.");
+Q("s9",3,"شكوى عميل داخل أول 24 ساعة، فما التصرف حسب المادة؟",["عمل Update على الشكوى وإبلاغ العميل بمدة 24 ساعة إذا كانت هي المدة المعتمدة للحالة.","تصعيدها فورًا على أنها 72 ساعة.","فتح شكوى جديدة.","إغلاقها."],0,"للشكوى داخل أول 24 ساعة: Update حسب الإجراء وإبلاغ العميل بالمدة المعتمدة.");
 
-            Object.values(userAnswers).forEach(ans => {
-                if (ans.isCorrect) correctCount++;
-                else wrongCount++;
-            });
+Q("s10",3,"ماذا تقول للعميل عند وجود شكوى بالفعل مع القسم المختص؟",["تؤكد له أنها اتحلت دون تحقق.","توضح حالة الشكوى والمدة المعتمدة للمتابعة.","تطلب منه إنشاء شكاوى مكررة.","تخبره أن المشكلة ليست مسؤوليتك."],1,"نوضح أن الشكوى مع القسم المختص وجاري العمل عليها مع الـ SLA المعتمد.");
+Q("s10",2,"إذا لم يكن اسم حالة TTS واضحًا، ماذا تفعل؟",["تخترع اسمًا مشابهًا.","تؤكد الحالة من المرجع الرسمي.","تتجاهلها.","تغلق جميع الشكاوى."],1,"لا نخترع أسماء حالات؛ نؤكدها من المرجع الرسمي.");
 
-            document.getElementById('stat-answered').innerText = answeredCount;
-            document.getElementById('stat-correct').innerText = correctCount;
-            document.getElementById('stat-wrong').innerText = wrongCount;
+Q("s11",2,"متى تستخدم IR Acceleration؟",["في كل مكالمة دون استثناء.","عندما تستوفي الحالة شروط طلب التسريع المعتمد.","فقط عند تجديد الباقة.","بدلًا من أي فحص فني."],1,"التسريع يُستخدم عند استيفاء الشروط وليس بدلًا من الفحص.");
 
-            const percent = Math.round((answeredCount / quizData.length) * 100);
-            document.getElementById('progress-percent').innerText = `${percent}%`;
-            document.getElementById('progress-bar').style.width = `${percent}%`;
-        }
+Q("s12",1,"ما الهدف من مراجعة الشكاوى السابقة؟",["تجاهل المشكلة الحالية.","فهم تكرار المشكلة وتحديد الإجراء المناسب.","إلغاء الشكاوى القديمة.","منح تعويض دون شروط."],1,"المراجعة تساعد على فهم التكرار ومتابعة المشكلة بشكل أدق.");
 
-        function showFinalResult() {
-            const answeredCount = Object.keys(userAnswers).length;
-            if (answeredCount === 0) {
-                alert('يرجى البدء في حل بعض الأسئلة أولاً قبل عرض النتيجة!');
-                return;
-            }
+Q("s13",2,"ما الإجراء الصحيح عند تأخر الشكوى؟",["إنشاء طلبات مكررة دائمًا.","مراجعة حالة الطلب وشروط التصعيد أو إعادة الإسناد.","ضمان حل المشكلة فورًا.","تجاهل تاريخ الشكوى."],1,"نراجع حالة الطلب ونتبع إجراء التصعيد أو إعادة الإسناد.");
 
-            let correctCount = 0;
-            Object.values(userAnswers).forEach(ans => {
-                if (ans.isCorrect) correctCount++;
-            });
+Q("s14",2,"متى تصف الحالة بأنها Outage؟",["عند تخمين وجود مشكلة في المنطقة.","عندما تدعم بيانات النظام ذلك.","عند كل شكوى بطء.","عند كل شكوى تجديد باقة."],1,"الوصف يجب أن يستند إلى بيانات النظام لا إلى التخمين.");
+Q("s14",1,"ما البيانات المهمة التي تُذكر للعميل عند التصعيد؟",["رقم الطلب والمدة المعتمدة للمتابعة.","بيانات عميل آخر.","كلمة مرور الراوتر.","معلومات غير مؤكدة عن موعد الحل."],0,"سكريبتات Major Fault وOutage تذكر رقم الطلب والمدة المحددة للمتابعة.");
 
-            const scorePercent = Math.round((correctCount / quizData.length) * 100);
-            const modal = document.getElementById('result-modal');
-            const headline = document.getElementById('modal-headline');
-            const scoreDisplay = document.getElementById('modal-percentage');
-            const desc = document.getElementById('modal-summary');
-            const icon = document.getElementById('modal-icon');
+Q("s15",2,"ما الذي يجب التأكد منه قبل منح Mobile Concession؟",["استحقاق العميل والرقم والتفاصيل المعتمدة.","اسم العميل فقط.","عدم وجود أي شكوى.","منح التعويض لكل العملاء تلقائيًا."],0,"الخطوات: التحقق من الاستحقاق، ثم رقم الموبايل، ثم حجم الباقة ومدتها، ثم توضيح الشروط.");
 
-            scoreDisplay.innerText = `${scorePercent}%`;
+Q("s16",2,"بعد تجديد الباقة، ما الخطوة المهمة؟",["إنهاء المكالمة مباشرة.","التأكد من نجاح التجديد والتحقق من الخدمة.","تغيير بيانات الحساب.","فتح شكوى فنية تلقائيًا."],1,"بعد التجديد نتأكد من نجاحه ونتحقق من حالة الخدمة.");
+Q("s16",1,"أي من التالي قناة تجديد مذكورة في سكريبت التجديد؟",["تطبيق الشركة.","واتساب شخصي للموظف.","رسالة من رقم مجهول.","زيارة العميل لمنزل الموظف."],0,"السكريبت يذكر تطبيق الشركة والموقع والقنوات الصوتية والشات بوت حسب المتاح.");
 
-            if (scorePercent >= 85) {
-                icon.innerText = '🌟';
-                headline.innerText = 'ممتاز جداً! جاهز للـ OJT باقتدار';
-                desc.innerText = `أجبت على ${correctCount} من إجمالي ${quizData.length} سؤال بشكل صحيح. استيعابك للإجراءات والأنظمة والـ SRS ممتاز!`;
-            } else if (scorePercent >= 65) {
-                icon.innerText = '👍';
-                headline.innerText = 'مستوى جيد، بحاجة لمراجعة بعض السيناريوهات';
-                desc.innerText = `أجبت على ${correctCount} من إجمالي ${quizData.length} سؤال. راجع الأسئلة الموضحة باللون الأحمر لتثبيت خطوات الـ Verification والإتاحة.`;
-            } else {
-                icon.innerText = '📚';
-                headline.innerText = 'بحاجة لمزيد من المذاكرة والتركيز';
-                desc.innerText = `أجبت على ${correctCount} من إجمالي ${quizData.length} سؤال. يُفضل مراجعة ملفات الـ Early Renew والـ Check Availability بعناية.`;
-            }
+Q("s17",2,"ما التصرف الصحيح بعد Port Restart؟",["ضمان أن المشكلة لن تتكرر.","التحقق من نتيجة الإجراء وحالة الخدمة.","إغلاق جميع الشكاوى.","تجاهل نتيجة الفحص."],1,"بعد التنفيذ نراجع النتيجة ونتحقق من الخدمة مع العميل.");
 
-            modal.classList.add('active');
-        }
+Q("s18",1,"ما التولز المذكورة للمشكلة الفنية؟",["BSS فقط.","360 وBSS وADF وTTS.","HDM فقط.","لا توجد أدوات."],1,"المشكلة الفنية (Logical أو Physical): 360 وBSS وADF وTTS.");
+Q("s18",1,"ما التولز المذكورة لتجديد الباقة؟",["HDM وTTS.","360 وBSS.","ADF فقط.","جميع الأدوات دون استثناء."],1,"تجديد الباقة: BSS و360.");
+Q("s18",2,"عند تغيير إعداد من HDM، ما دور 360 المذكور في التدريب؟",["مراجعة بيانات الخط واستخراج Account Number.","منح التعويض تلقائيًا.","حذف الشكاوى.","إعادة تشغيل هاتف العميل."],0,"360 لمراجعة بيانات الخط واستخراج Account Number، ثم HDM لتنفيذ الإجراء.");
 
-        function closeModal() {
-            document.getElementById('result-modal').classList.remove('active');
-        }
+Q("s19",2,"بعد تصعيد الشكوى، ما الذي يجب توضيحه للعميل؟",["رقم الشكوى والـ SLA المعتمد.","معلومات غير مؤكدة.","بيانات عملاء آخرين.","لا شيء."],0,"سكريبت إنهاء المكالمة يذكر رقم الشكوى والمدة المحددة للمتابعة.");
 
-        function resetQuiz() {
-            if (confirm('هل أنت متأكد من رغبتك في إعادة تعيين كافة الإجابات والبدء من جديد؟')) {
-                userAnswers = {};
-                updateStats();
-                renderQuestions();
-            }
-        }
+/* ===== القاموس ===== */
+var NR="يحتاج إلى مراجعة مرجع التدريب";
+var GLOSS=[
+["Browsing","اسم مسار لحالة «الإنترنت متصل لكن لا يوجد اتصال فعلي» (علامة تعجب، رسالة Login...).",0],
+["Logical Instability","مسار لحالة فصل وعودة الإنترنت المتكررة مع اللمبات UP، يحدده الفحص. التقسيم التفصيلي "+NR+".",0],
+["Physical Instability","مسار لشكوى الإنترنت بيفصل ويشتغل بعد مراجعة 360 وBSS وADF وTTS. التفاصيل الدقيقة "+NR+".",0],
+["Data Down","انقطاع كامل لخدمة الإنترنت، وقد تكون لمبة DSL أو Internet مطفأة أو حمراء.",0],
+["Logs","سجلات الحالة التي تُراجع وفق الـ Flow (مثال: آخر 12 ساعة).",0],
+["IP","عنوان الشبكة الذي يحصل عليه الراوتر؛ عدم حصوله عليه من أعراض مسار No IP.",0],
+["MAC","عنوان تعريفي للجهاز يُراجع مع IP في الـ Flow عند استمرار المشكلة.",0],
+["RJ11","وصلة خط الهاتف التي تُراجع ضمن فحص التوصيلات في Data Down.",0],
+["DSL","اسم لمبة تتم مراجعتها؛ قد تكون مطفأة أو حمراء في حالة Data Down.",0],
+["Wi-Fi","الشبكة اللاسلكية؛ يُراجع دعم الجهاز لشبكتين منها في Logical Instability.",0],
+["Account Number","رقم الحساب الذي يُستخرج من 360 قبل تنفيذ إجراء HDM.",0],
+["SR","طلب خدمة/شكوى يُسجل على النظام. التعريف الدقيق "+NR+".",1],
+["SLA","المدة المعتمدة للمتابعة التي تُذكر للعميل. تفاصيل 24 أو 72 ساعة "+NR+".",1],
+["Follow-up","متابعة الشكوى أو الطلب بعد تسجيله وفق المدة المعتمدة.",0],
+["Escalation","تصعيد الحالة للفريق المختص وفق المسار المعتمد عند استمرار المشكلة.",0],
+["IR Acceleration","طلب تسريع متابعة المشكلة عند استيفاء الشروط. الشروط "+NR+".",1],
+["IR Rework","إجراء للشكاوى المتكررة. الشروط "+NR+".",1],
+["IR Delay","حالة تأخر متابعة الطلب وقد تستدعي تصعيدًا أو إعادة إسناد. الشروط "+NR+".",1],
+["Major Fault","عطل جسيم في الشبكة يؤثر على مجموعة من الخطوط ويتطلب تدخل فرق الصيانة.",0],
+["Outage","عطل فني في المنطقة يؤثر على مجموعة من الخطوط، ويُذكر فقط إذا دعمته بيانات النظام.",0],
+["Clear View","فحص على الخط لمراجعة حالة الاتصال، يُذكر للعميل أنه متوقع أقل من دقيقتين.",0],
+["Port Restart","إجراء تنشيط للخط من جهة الموظف حسب الصلاحيات.",0],
+["HDM","أداة تُستخدم لتنفيذ إجراء تغيير الإعدادات بعد استخراج Account Number من 360. "+NR+".",1],
+["BSS","أداة مذكورة للمشاكل الفنية وتجديد الباقة وحالات الحرارة. "+NR+".",1],
+["ADF","أداة مذكورة للمشاكل الفنية وحالات الحرارة. "+NR+".",1],
+["TTS","أداة/نوع حالة مذكور في الفحص والشكاوى. "+NR+".",1],
+["360","أداة لمراجعة بيانات الخط واستخراج Account Number وتظهر عليها حالة الشكوى.",0],
+["Zero 15","تعويض 3 جيجابايت لمدة يومين لحالات محددة بشروط استحقاق. الشروط "+NR+".",1],
+["Mobile Concession","مراجعة توفير بيانات موبايل للعميل المستحق أثناء تأثر الخدمة الأرضية. الشروط "+NR+".",1]
+].map(function(g){return {t:g[0],d:g[1],c:!!g[2]};});
 
-        // Initialize on load
-        window.onload = initApp;
-    </script>
+var CONFIRM=[
+"أسماء اختيارات Browsing المرتبطة بالـ HDM.",
+"الاسم الدقيق لراوترَي 530 و531.",
+"شروط تقسيم Logical Instability حسب عدد الانقطاعات والفاصل الزمني.",
+"شروط Data Down عند وجود 3 Logs خلال آخر 12 ساعة.",
+"الترتيب الدقيق لفحص RJ11 والسلك والتوصيل الرئيسي.",
+"الاسم الصحيح للحالة التي نطقها المدرب «الأزهر».",
+"شروط Zero 15 وشرط الـ 24 ساعة.",
+"متى يكون SLA هو 24 ساعة ومتى يكون 72 ساعة.",
+"شروط IR Acceleration وIR Rework وIR Delay.",
+"شروط استخدام Mobile Concession.",
+"اسم حالة TTS التي ذكر فيها المدرب مدة 15 دقيقة.",
+"تأكيد أسماء الأدوات وترتيب استخدامها حسب نوع الـ Case."
+];
+
+/* ===================== الحالة ===================== */
+var KEY="we_cca_ojt_v1";
+var st={ans:{},visited:{},theme:null};
+try{var raw=localStorage.getItem(KEY);if(raw){var p=JSON.parse(raw);if(p&&typeof p==="object"){st.ans=p.ans||{};st.visited=p.visited||{};st.theme=p.theme||null;}}}catch(e){}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(st));}catch(e){}}
+var $=function(s){return document.querySelector(s);};
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];});}
+function secById(id){return SECTIONS.filter(function(s){return s.id===id;})[0];}
+function secName(id){var s=secById(id);return s?s.ar:"";}
+function qsOf(id){return QS.filter(function(q){return q.sec===id;});}
+function shuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;}return a;}
+var ORD={};
+function order(q){if(!ORD[q.id])ORD[q.id]=shuffle([0,1,2,3]);return ORD[q.id];}
+function counts(){var ans=0,ok=0;QS.forEach(function(q){var a=st.ans[q.id];if(a){ans++;if(a.ok)ok++;}});return {ans:ans,ok:ok,total:QS.length,vis:Object.keys(st.visited).filter(function(k){return secById(k);}).length};}
+
+/* ===================== الثيم ===================== */
+function applyTheme(){var t=st.theme||(window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");document.documentElement.setAttribute("data-theme",t);$("#themeBtn").textContent=t==="dark"?"☀️":"🌙";}
+$("#themeBtn").onclick=function(){var cur=document.documentElement.getAttribute("data-theme");st.theme=cur==="dark"?"light":"dark";save();applyTheme();};
+$("#printBtn").onclick=function(){window.print();};
+$("#menuBtn").onclick=function(){document.body.classList.toggle("menu-open");};
+
+/* ===================== الشريط الجانبي ===================== */
+function buildSide(){
+ var h='<a href="#/home"><span class="n">⌂</span>الرئيسية</a><h4>أقسام التدريب</h4>';
+ SECTIONS.forEach(function(s,i){h+='<a href="#/s/'+s.id+'" data-r="s/'+s.id+'"><span class="n">'+(i+1)+'</span>'+esc(s.ar)+'<span class="tick">'+(st.visited[s.id]?"✓":"")+'</span></a>';});
+ h+='<h4>أدوات</h4><a href="#/glossary"><span class="n">A</span>قاموس المصطلحات</a><a href="#/confirm"><span class="n">!</span>راجع هذه النقاط مع المدرب</a><a href="#/quiz/all"><span class="n">★</span>اختبار شامل</a><a href="#/quiz/wrong"><span class="n">↻</span>مراجعة الإجابات الخاطئة</a><a href="#/all"><span class="n">☰</span>عرض كل المحتوى للطباعة</a>';
+ $("#side").innerHTML=h;
+ markActive();
+}
+function markActive(){var cur=location.hash||"#/home";document.querySelectorAll("#side a").forEach(function(a){a.classList.toggle("active",a.getAttribute("href")===cur);});}
+function updateStats(){
+ var c=counts();
+ var pct=Math.round((c.ans/c.total)*100);
+ var top=$("#topProg");if(top)top.style.width=Math.round(((c.ans/c.total)+(c.vis/SECTIONS.length))/2*100)+"%";
+ var m={"#stAns":c.ans,"#stOk":c.ok};
+ for(var k in m){var el=$(k);if(el)el.textContent=m[k];}
+ var pb=$("#pbar");if(pb)pb.style.width=pct+"%";
+ var pt=$("#ptxt");if(pt)pt.textContent=pct+"%";
+}
+
+/* ===================== بطاقة السؤال ===================== */
+function qCard(q,cb){
+ var box=document.createElement("div");box.className="qcard";
+ function draw(){
+  var a=st.ans[q.id],ord=order(q);
+  var h='<div><span class="chip">'+LV[q.lvl]+'</span> <span class="chip ghost">'+esc(secName(q.sec))+'</span></div><p class="qtext">'+esc(q.q)+'</p><div class="opts">';
+  ord.forEach(function(oi,k){
+   var cls="opt";if(a){if(oi===q.a)cls+=" right";else if(oi===a.c)cls+=" wrong";}
+   h+='<button class="'+cls+'" data-oi="'+oi+'"'+(a?" disabled":"")+'><b>'+"ABCD"[k]+'</b><span>'+esc(q.o[oi])+'</span></button>';
+  });
+  h+="</div>";
+  if(a){
+   h+='<div class="fb '+(a.ok?"ok":"bad")+'"><strong>'+(a.ok?"✔ إجابة صحيحة":"✘ إجابة خاطئة")+'</strong><p>الإجابة الصحيحة: '+"ABCD"[ord.indexOf(q.a)]+". "+esc(q.o[q.a])+'</p><p>'+esc(q.e)+'</p><button class="btn ghost retry">إعادة المحاولة</button></div>';
+  }
+  box.innerHTML=h;
+  box.querySelectorAll(".opt").forEach(function(b){b.onclick=function(){
+   if(st.ans[q.id])return;var oi=+b.getAttribute("data-oi");
+   st.ans[q.id]={c:oi,ok:oi===q.a};save();draw();updateStats();if(cb)cb();};});
+  var r=box.querySelector(".retry");
+  if(r)r.onclick=function(){delete st.ans[q.id];delete ORD[q.id];save();draw();updateStats();if(cb)cb();};
+ }
+ draw();return box;
+}
+
+/* ===================== الصفحات ===================== */
+function ul(arr,cls){return '<ul'+(cls?' class="'+cls+'"':"")+">"+arr.map(function(s){return s.charAt(0)==="⚠"?'<li class="warn">'+esc(s)+"</li>":"<li>"+esc(s)+"</li>";}).join("")+"</ul>";}
+function ol(arr){return "<ol>"+arr.map(function(s){return s.charAt(0)==="⚠"?'<li class="warn">'+esc(s)+"</li>":"<li>"+esc(s)+"</li>";}).join("")+"</ol>";}
+function block(n,title,body,cls){return '<div class="card '+(cls||"")+'" style="margin:12px 0"><h3><span class="num">'+n+"</span>"+title+"</h3>"+body+"</div>";}
+
+function sectionHTML(s,idx){
+ var h='<div class="secHead"><div class="chip" style="background:rgba(255,255,255,.2);color:#fff">القسم '+(idx+1)+' من '+SECTIONS.length+'</div><h1>'+esc(s.ar)+'</h1><div class="en ltr">'+esc(s.en)+'</div>';
+ if(s.confirm.length)h+='<div style="margin-top:8px"><span class="badge">⚠️ تحتاج إلى تأكيد</span></div>';
+ h+="</div>";
+ h+=block(1,"تعريف المشكلة","<p>"+esc(s.problem)+"</p>");
+ h+=block(2,"متى نستخدم هذا السيناريو؟","<p>"+esc(s.when)+"</p>");
+ h+=block(3,"العلامات أو الأعراض التي يذكرها العميل",ul(s.signs));
+ h+=block(4,"خطوات التعامل مع الحالة بالترتيب",ol(s.steps));
+ h+=block(5,"مسار اتخاذ القرار",ul(s.decision,"dec"));
+ h+=block(6,"أسئلة النظام والاختيارات المذكورة",ul(s.sysq));
+ h+=block(7,"سكريبت جاهز للتحدث مع العميل",s.script.map(function(x){return '<div class="script"><small>'+esc(x.h)+"</small>"+esc(x.t)+"</div>";}).join(""));
+ h+=block(8,"الأخطاء التي يجب تجنبها",ul(s.mistakes),"mist");
+ h+=block(9,"ملخص سريع للحفظ","<p><strong>"+esc(s.summary)+"</strong></p>","sum");
+ if(s.confirm.length)h+='<div class="confirmBox"><strong>⚠️ راجع مع المدرب:</strong>'+ul(s.confirm)+"</div>";
+ return h;
+}
+
+function renderHome(){
+ var c=counts(),pct=Math.round(c.ans/c.total*100);
+ var h='<div class="hero"><h1>WE CCA | OJT Training Hub</h1><p>مرجعك التفاعلي لفهم السيناريوهات الفنية وإدارة مكالمات العملاء.</p></div>';
+ h+='<div class="grid g4"><div class="card stat"><b>'+SECTIONS.length+'</b><span>إجمالي السيناريوهات</span></div><div class="card stat"><b>'+c.total+'</b><span>عدد الأسئلة</span></div><div class="card stat"><b id="stAns">'+c.ans+'</b><span>أسئلة أجبت عنها</span></div><div class="card stat"><b id="stOk">'+c.ok+'</b><span>إجابات صحيحة</span></div></div>';
+ h+='<div class="card"><strong>نسبة التقدم في التدريب: <span id="ptxt">'+pct+'%</span></strong><div class="bar"><i id="pbar" style="width:'+pct+'%"></i></div><small style="color:var(--muted)">أقسام تمت مذاكرتها: '+c.vis+" من "+SECTIONS.length+"</small></div>";
+ h+='<div class="row"><a class="btn" href="#/s/s1">ابدأ المذاكرة</a><a class="btn" href="#/quiz/all">ابدأ الاختبار</a><a class="btn ghost" href="#/quiz/wrong">مراجعة الإجابات الخاطئة</a><a class="btn ghost" href="#/all">طباعة كل المحتوى</a><button class="btn ghost" id="resetBtn">مسح تقدمي</button></div>';
+ h+="<h2>أقسام التدريب</h2><div class=\"grid g3\">";
+ SECTIONS.forEach(function(s,i){
+  var qn=qsOf(s.id).length,done=qsOf(s.id).filter(function(q){return st.ans[q.id];}).length;
+  h+='<a class="card" href="#/s/'+s.id+'" style="color:var(--text)"><span class="chip">'+(i+1)+'</span> '+(s.confirm.length?'<span class="badge">تحتاج تأكيد</span>':"")+'<h3 style="margin-top:8px">'+esc(s.ar)+'</h3><div class="ltr" style="color:var(--muted)">'+esc(s.en)+'</div><small style="color:var(--muted)">'+(st.visited[s.id]?"✓ تمت المذاكرة · ":"")+"الأسئلة: "+done+"/"+qn+"</small></a>";
+ });
+ h+="</div><h2>أهم المصطلحات</h2><div class=\"card tags\">";
+ ["Browsing","Logical Instability","Data Down","SLA","Escalation","Port Restart","Outage","Zero 15","Mobile Concession"].forEach(function(t){h+='<a href="#/glossary?q='+encodeURIComponent(t)+'">'+t+"</a>";});
+ h+='</div><h2>نقاط تحتاج إلى مراجعة من المدرب</h2><div class="confirmBox"><ul>'+CONFIRM.slice(0,5).map(function(x){return "<li>"+esc(x)+"</li>";}).join("")+'</ul><a href="#/confirm">عرض القائمة الكاملة ←</a></div>';
+ $("#main").innerHTML=h+footer();
+ $("#resetBtn").onclick=function(){if(confirm("هل تريد مسح نتائج الأسئلة وتقدم المذاكرة من هذا المتصفح؟")){st.ans={};st.visited={};ORD={};save();buildSide();renderHome();updateStats();}};
+}
+function footer(){return '<footer class="note">هذا الموقع مرجع تدريبي شخصي للمذاكرة، وليس موقعًا رسميًا تابعًا لشركة WE، وغير متصل بأي نظام حقيقي، ولا يحتوي على بيانات عملاء. المحتوى مبني على مادة التدريب المتاحة، وأي نقطة غير مؤكدة موسومة بـ «تحتاج إلى تأكيد» ويجب مراجعتها مع المدرب قبل اعتمادها.</footer>';}
+
+function renderSection(id){
+ var s=secById(id);if(!s)return renderHome();
+ var idx=SECTIONS.indexOf(s);st.visited[id]=1;save();buildSide();
+ var h=sectionHTML(s,idx);
+ var qs=qsOf(id);
+ h+='<h2 id="quizTop">11) اختبار تفاعلي: '+esc(s.ar)+'</h2><div id="qbox"></div><div class="card" id="sc" style="margin-top:12px"></div>';
+ h+='<div class="row"><a class="btn" href="#/quiz/'+id+'">اختبر نفسك في هذا القسم (سؤال بسؤال)</a>'+(idx>0?'<a class="btn ghost" href="#/s/'+SECTIONS[idx-1].id+'">← السابق</a>':"")+(idx<SECTIONS.length-1?'<a class="btn ghost" href="#/s/'+SECTIONS[idx+1].id+'">التالي →</a>':"")+"</div>";
+ $("#main").innerHTML=h+footer();
+ var box=$("#qbox");
+ function sc(){var d=qs.filter(function(q){return st.ans[q.id];}).length,o=qs.filter(function(q){return st.ans[q.id]&&st.ans[q.id].ok;}).length;$("#sc").innerHTML="نتيجتك في هذا القسم: <strong>"+o+" / "+qs.length+"</strong> (أجبت عن "+d+")";}
+ qs.forEach(function(q){box.appendChild(qCard(q,sc));});sc();
+ updateStats();
+}
+
+function renderAll(){
+ var h='<div class="hero noprint"><h1>كل المحتوى للطباعة</h1><p>اضغط «طباعة» ثم احفظ كـ PDF.</p><div class="row"><button class="btn ghost" onclick="window.print()">🖨 طباعة / حفظ PDF</button></div></div>';
+ SECTIONS.forEach(function(s,i){h+='<section class="printSec">'+sectionHTML(s,i)+"</section>";});
+ $("#main").innerHTML=h+footer();
+}
+
+function renderGlossary(q0){
+ var h='<div class="secHead"><h1>قاموس المصطلحات</h1><div class="en">Glossary</div></div><input id="gq" type="search" placeholder="ابحث في المصطلحات..." style="width:100%;padding:10px 14px;border-radius:12px;border:1px solid var(--line);background:var(--card);color:var(--text);font-family:inherit;font-size:1rem"><div class="gl" id="gl" style="margin-top:14px"></div>';
+ $("#main").innerHTML=h+footer();
+ function draw(){var q=$("#gq").value.trim().toLowerCase();
+  $("#gl").innerHTML=GLOSS.filter(function(g){return !q||g.t.toLowerCase().indexOf(q)>-1||g.d.toLowerCase().indexOf(q)>-1;}).map(function(g){return '<div class="card"><h3>'+esc(g.t)+"</h3><p style='margin:0'>"+esc(g.d)+"</p>"+(g.c?'<span class="badge">يحتاج إلى مراجعة</span>':"")+"</div>";}).join("")||"<p>لا توجد نتائج.</p>";}
+ $("#gq").oninput=draw;if(q0)$("#gq").value=q0;draw();
+}
+
+function renderConfirm(){
+ var h='<div class="secHead"><h1>راجع هذه النقاط مع المدرب</h1><div class="en">Needs Confirmation</div></div><div class="confirmBox">هذه النقاط وردت غير واضحة أو غير مكتملة في المادة الأصلية، ولا يجب اعتبارها تعليمات مؤكدة أو إجابات فنية معتمدة.</div><div class="card"><ol>'+CONFIRM.map(function(x){return "<li>"+esc(x)+"</li>";}).join("")+"</ol></div>";
+ $("#main").innerHTML=h+footer();
+}
+
+/* ===== وضع الاختبار ===== */
+var QZ=null;
+function startQuiz(id,lvl,list){
+ var ids;
+ if(list)ids=list;
+ else if(id==="all")ids=shuffle(QS.filter(function(q){return !lvl||q.lvl===lvl;}).map(function(q){return q.id;}));
+ else if(id==="wrong")ids=QS.filter(function(q){return st.ans[q.id]&&!st.ans[q.id].ok;}).map(function(q){return q.id;});
+ else ids=QS.filter(function(q){return q.sec===id&&(!lvl||q.lvl===lvl);}).map(function(q){return q.id;});
+ QZ={id:id,lvl:lvl||0,list:ids,i:0,done:false,review:false};
+}
+function qById(id){return QS.filter(function(q){return q.id===id;})[0];}
+function renderQuiz(id){
+ if(!QZ||QZ.id!==id)startQuiz(id,0);
+ var title=id==="all"?"اختبار شامل":id==="wrong"?"مراجعة الإجابات الخاطئة":"اختبر نفسك: "+secName(id);
+ var h='<div class="secHead"><h1>'+esc(title)+"</h1></div>";
+ if(id!=="wrong"){h+='<div class="lvls">'+[0,1,2,3].map(function(l){return '<button data-l="'+l+'" class="'+(QZ.lvl===l?"on":"")+'">'+(l?"المستوى "+l+" — "+LV[l]:"كل المستويات")+"</button>";}).join("")+"</div>";}
+ h+='<div id="qz"></div>';
+ $("#main").innerHTML=h+footer();
+ document.querySelectorAll(".lvls button").forEach(function(b){b.onclick=function(){startQuiz(id,+b.getAttribute("data-l"));renderQuiz(id);};});
+ drawQuiz();
+}
+function drawQuiz(){
+ var box=$("#qz");if(!box)return;box.innerHTML="";
+ if(!QZ.list.length){box.innerHTML='<div class="card">'+(QZ.id==="wrong"?"لا توجد إجابات خاطئة حاليًا. أحسنت! ✔":"لا توجد أسئلة لهذا الاختيار.")+"</div>";return;}
+ if(QZ.done){return drawResult(box);}
+ var q=qById(QZ.list[QZ.i]);
+ var head=document.createElement("div");head.className="card";
+ head.innerHTML="سؤال <strong>"+(QZ.i+1)+"</strong> من "+QZ.list.length+'<div class="bar"><i style="width:'+Math.round((QZ.i)/QZ.list.length*100)+'%"></i></div>';
+ box.appendChild(head);
+ var nav=document.createElement("div");nav.className="row";
+ function upd(){var done=!!st.ans[q.id];var last=QZ.i===QZ.list.length-1;nav.innerHTML="";
+  var b=document.createElement("button");b.className="btn";b.disabled=!done;b.textContent=last?"إنهاء وعرض النتيجة":"السؤال التالي";
+  b.onclick=function(){if(last){QZ.done=true;}else QZ.i++;drawQuiz();window.scrollTo(0,0);};nav.appendChild(b);}
+ box.appendChild(qCard(q,upd));box.appendChild(nav);upd();
+}
+function drawResult(box){
+ var list=QZ.list,ok=0,wrong=[];
+ list.forEach(function(id){var a=st.ans[id];if(a&&a.ok)ok++;else wrong.push(id);});
+ var pct=Math.round(ok/list.length*100);
+ var msg=pct>=85?"ممتاز! مستواك متميز.":pct>=60?"جيد، راجع الأسئلة الخاطئة لتثبيت المعلومة.":"تحتاج إلى مراجعة القسم مرة أخرى.";
+ var c=document.createElement("div");c.className="card score";
+ c.innerHTML='<div class="big">'+ok+" / "+list.length+'</div><p>النسبة: <strong>'+pct+"%</strong> — "+msg+'</p><div class="row" style="justify-content:center"><button class="btn" id="rt">إعادة الاختبار</button>'+(wrong.length?'<button class="btn ghost" id="rv">مراجعة الأسئلة الخاطئة ('+wrong.length+')</button>':"")+'<a class="btn ghost" href="#/home">الرئيسية</a></div>';
+ box.appendChild(c);
+ var rb=document.createElement("div");box.appendChild(rb);
+ $("#rt").onclick=function(){var keep=QZ.id==="wrong"?list.slice():null;list.forEach(function(id){delete st.ans[id];delete ORD[id];});save();updateStats();
+  if(keep)startQuiz(QZ.id,0,shuffle(keep));else startQuiz(QZ.id,QZ.lvl);renderQuiz(QZ.id);};
+ var rv=$("#rv");if(rv)rv.onclick=function(){rb.innerHTML="<h2>الأسئلة الخاطئة</h2>";wrong.forEach(function(id){rb.appendChild(qCard(qById(id)));});};
+}
+
+/* ===================== البحث ===================== */
+function plain(s){return (s.ar+" "+s.en+" "+s.problem+" "+s.when+" "+s.signs.join(" ")+" "+s.steps.join(" ")+" "+s.decision.join(" ")+" "+s.sysq.join(" ")+" "+s.script.map(function(x){return x.t;}).join(" ")+" "+s.mistakes.join(" ")+" "+s.summary).toLowerCase();}
+var IDX=SECTIONS.map(function(s){return {s:s,t:plain(s)};});
+var rs=$("#results"),si=$("#search");
+si.addEventListener("input",function(){
+ var q=si.value.trim().toLowerCase();if(!q){rs.style.display="none";return;}
+ var out=[];
+ IDX.forEach(function(x){if(x.t.indexOf(q)>-1)out.push('<a href="#/s/'+x.s.id+'">'+esc(x.s.ar)+'<small class="ltr">'+esc(x.s.en)+"</small></a>");});
+ GLOSS.forEach(function(g){if(g.t.toLowerCase().indexOf(q)>-1||g.d.toLowerCase().indexOf(q)>-1)out.push('<a href="#/glossary?q='+encodeURIComponent(g.t)+'">مصطلح: <span class="ltr">'+esc(g.t)+"</span><small>"+esc(g.d)+"</small></a>");});
+ rs.innerHTML=out.slice(0,10).join("")||'<a style="color:var(--muted)">لا توجد نتائج</a>';rs.style.display="block";
+});
+document.addEventListener("click",function(e){
+ if(!e.target.closest(".searchWrap"))rs.style.display="none";
+ var a=e.target.closest("a[href]");
+ if(a){var hr=a.getAttribute("href");
+  if(hr.indexOf("#/quiz")===0){QZ=null;if(location.hash===hr){e.preventDefault();route();}}
+  if(hr.charAt(0)==="#"){document.body.classList.remove("menu-open");rs.style.display="none";si.value="";}
+ }
+});
+
+/* ===================== التوجيه ===================== */
+function route(){
+ var hs=location.hash||"#/home";var parts=hs.slice(2).split("?");var path=parts[0].split("/");var qs=parts[1]||"";
+ window.scrollTo(0,0);
+ try{
+  if(path[0]==="s"&&path[1])renderSection(path[1]);
+  else if(path[0]==="glossary"){var m=/q=([^&]*)/.exec(qs);renderGlossary(m?decodeURIComponent(m[1]):"");}
+  else if(path[0]==="confirm")renderConfirm();
+  else if(path[0]==="all")renderAll();
+  else if(path[0]==="quiz"&&path[1]){if(path[1]!=="all"&&path[1]!=="wrong"&&!secById(path[1]))renderHome();else renderQuiz(path[1]);}
+  else renderHome();
+ }catch(err){$("#main").innerHTML='<div class="card">حدث خطأ غير متوقع أثناء عرض الصفحة.</div>';}
+ markActive();updateStats();
+}
+window.addEventListener("hashchange",route);
+applyTheme();buildSide();route();
+</script>
 </body>
 </html>
